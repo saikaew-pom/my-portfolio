@@ -323,6 +323,9 @@ header > p:not(.header-creds) {
   aspect-ratio: 4/3;
   background: #141414;
   border: 1px solid #252525;
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .gallery-tile img {
