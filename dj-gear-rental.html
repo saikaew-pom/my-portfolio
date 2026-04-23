@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DJ Equipment Rental — Pro Audio Hire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #9a7535;
+      --gold-light: #b89050;
+      --gold-dim: rgba(154,117,53,0.08);
+      --bg: #faf9f7;
+      --surface: #ffffff;
+      --surface2: #f4f2ee;
+      --border: rgba(154,117,53,0.2);
+      --border-subtle: rgba(0,0,0,0.07);
+      --text: #1a1714;
+      --muted: #8a8480;
+      --radius: 4px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 80px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 60%, rgba(154,117,53,0.06) 0%, transparent 70%),
+        linear-gradient(180deg, #faf9f7 0%, #f4f2ee 100%);
+      z-index: 0;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(154,117,53,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(154,117,53,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+    }
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -1px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 40px;
+    }
+    .hero-tagline {
+      font-size: 17px;
+      color: #999;
+      letter-spacing: 0.3px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.35;
+      animation: pulse 2s ease-in-out infinite;
+      color: var(--muted);
+    }
+    .hero-scroll span {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .hero-scroll svg { width: 14px; height: 14px; }
+    @keyframes pulse { 0%,100% { opacity:0.35; } 50% { opacity:0.6; } }
+
+    /* ─── NAV ───────────────────────────────────────────── */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,249,247,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: 0 1px 0 rgba(154,117,53,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-item {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 20px;
+      white-space: nowrap;
+      transition: color 0.2s;
+      border-right: 1px solid rgba(0,0,0,0.07);
+    }
+    .nav-item:last-child { border-right: none; }
+    .nav-item:hover { color: var(--gold); }
+
+    /* ─── SECTION ───────────────────────────────────────── */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 24px 60px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 56px;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .section-desc {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 48px;
+    }
+
+    /* ─── TIER BADGE ────────────────────────────────────── */
+    .tier-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      margin-top: 72px;
+    }
+    .tier-header:first-of-type { margin-top: 0; }
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      border: 1px solid var(--border);
+      background: var(--gold-dim);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .tier-sep {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+    .tier-price-range {
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ─── CARDS ─────────────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2px;
+    }
+    .cards-grid-2 {
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .card:hover {
+      border-color: var(--border);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.08);
+      z-index: 2;
+    }
+    .card:hover .card-overlay { opacity: 1; }
+    .card:hover .card-img { transform: scale(1.04); }
+
+    .card-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #e8e4de;
+    }
+    .card-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.97) contrast(1.02);
+      transition: transform 0.6s ease;
+      display: block;
+    }
+    .card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(250,249,247,0.25) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card-corner {
+      position: absolute;
+      top: 12px; right: 12px;
+      padding: 5px 12px;
+      background: rgba(250,249,247,0.92);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      padding: 24px 24px 28px;
+    }
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .card-components {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.75;
+      margin-bottom: 22px;
+      font-weight: 300;
+    }
+    .card-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 16px;
+    }
+    .card-price {
+      display: flex;
+      flex-direction: column;
+    }
+    .card-price-label {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .card-price-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .card-price-unit {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+    .card-enquire {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      background: transparent;
+      cursor: pointer;
+    }
+    .card-enquire:hover {
+      background: var(--gold-dim);
+    }
+
+    /* ─── ACCESSORIES SECTION ───────────────────────────── */
+    .add-ons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2px;
+    }
+    .addon-card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .addon-card:hover {
+      border-color: var(--border);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    .addon-img-wrap {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #e8e4de;
+    }
+    .addon-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.97);
+      transition: transform 0.5s;
+    }
+    .addon-card:hover .addon-img { transform: scale(1.04); }
+    .addon-body {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .addon-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .addon-desc {
+      font-size: 13px;
+      color: #bbb;
+      line-height: 1.7;
+      max-width: 200px;
+    }
+    .addon-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      color: var(--gold);
+    }
+    .addon-unit {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      letter-spacing: 1px;
+    }
+
+    /* ─── INFO STRIP ────────────────────────────────────── */
+    .info-strip {
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--surface2);
+      padding: 40px 24px;
+      margin-top: 100px;
+    }
+    .info-strip-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+    .info-item-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: var(--gold);
+    }
+    .info-item-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .info-item-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+    .footer-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .footer-text {
+      font-size: 13px;
+      color: #bbb;
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── PRICE NOTE ────────────────────────────────────── */
+    .price-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 48px;
+    }
+    .price-note::before, .price-note::after {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── BOOKING FORM ──────────────────────────────────── */
+    .booking-section {
+      background: var(--surface2);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 100px 24px;
+    }
+    .booking-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .booking-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .booking-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .booking-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .booking-subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .booking-divider {
+      width: 50px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 20px auto 0;
+    }
+    .booking-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    .form-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .req {
+      color: var(--gold);
+      margin-left: 2px;
+    }
+    .form-input,
+    .form-select,
+    .form-textarea {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      border-radius: 0;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: #ccc; }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--border);
+      box-shadow: 0 0 0 3px rgba(154,117,53,0.08);
+    }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a7535' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+    .form-submit {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 18px 40px;
+      background: var(--text);
+      color: var(--surface);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+    .form-submit:hover {
+      background: var(--gold);
+      transform: translateY(-1px);
+    }
+    .form-submit:active { transform: translateY(0); }
+    .form-submit svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .form-note {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-size: 12px;
+      color: #bbb;
+      margin-top: 4px;
+    }
+    .form-note a { color: var(--gold); text-decoration: none; }
+
+    /* ─── PA SYSTEM CARD ────────────────────────────────── */
+    .pa-card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .pa-card:hover {
+      border-color: var(--border);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+    .pa-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #e8e4de;
+      overflow: hidden;
+    }
+    .pa-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.97);
+      transition: transform 0.6s ease;
+      display: block;
+    }
+    .pa-card:hover .pa-img { transform: scale(1.03); }
+    .pa-body {
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .pa-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .pa-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .pa-tagline {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .pa-spec-group-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .pa-specs {
+      list-style: none;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .pa-specs li {
+      font-size: 14px;
+      color: #666;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .pa-specs li::before {
+      content: '—';
+      color: var(--gold);
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pa-includes {
+      background: var(--surface2);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 18px;
+      margin-bottom: 28px;
+    }
+    .pa-includes-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .pa-includes-items {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .pa-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 20px;
+    }
+    .pa-price-label {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .pa-price-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .pa-price-unit {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pa-images-4 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+    .pa-images-4 .pa-img { aspect-ratio: 1/1; }
+
+    /* ─── RESPONSIVE ───────────────────────────────── */
+
+    /* Tablet — collapse 420px-min elite grid earlier */
+    @media (max-width: 1024px) {
+      .cards-grid-2 {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      }
+    }
+
+    /* Medium — stack PA cards, tighten section padding */
+    @media (max-width: 900px) {
+      .section { padding: 80px 20px 48px; }
+
+      .pa-card { grid-template-columns: 1fr; }
+      .pa-images { grid-template-columns: 1fr 1fr; }
+      .pa-img { aspect-ratio: 1/1; }
+      .pa-body { padding: 28px 24px; }
+
+      .booking-section { padding: 80px 20px; }
+    }
+
+    /* Small phones */
+    @media (max-width: 640px) {
+      /* Hero */
+      .hero { min-height: 80vh; padding: 48px 20px 64px; }
+      .hero-eyebrow { font-size: 11px; letter-spacing: 3px; }
+
+      /* Nav — slightly tighter */
+      .nav-item { padding: 0 14px; font-size: 11px; }
+
+      /* Sections */
+      .section { padding: 56px 16px 36px; }
+      .section-header { margin-bottom: 32px; }
+
+      /* Tier headers */
+      .tier-header { margin-top: 44px; gap: 12px; }
+      .tier-price-range { display: none; } /* too cluttered on small screens */
+
+      /* Cards */
+      .cards-grid,
+      .cards-grid-2 { grid-template-columns: 1fr; }
+
+      /* Card footer: stack price + button vertically */
+      .card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .card-enquire {
+        align-self: stretch;
+        text-align: center;
+        padding: 12px 16px;
+      }
+
+      /* Accessories add-on card */
+      .add-ons-grid { grid-template-columns: 1fr; }
+      .addon-body {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .addon-desc { max-width: 100%; }
+      .addon-body > div:last-child {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-left: 0 !important;
+      }
+
+      /* Info strip */
+      .info-strip { padding: 40px 16px; margin-top: 60px; }
+      .info-strip-inner { gap: 28px; }
+
+      /* Booking form */
+      .booking-section { padding: 56px 16px; }
+      .booking-form { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+      .form-submit,
+      .form-note { grid-column: 1; }
+      .form-submit { padding: 16px 24px; }
+
+      /* PA cards */
+      .pa-body { padding: 24px 18px; }
+      .pa-name { font-size: 26px; }
+      .pa-price-value { font-size: 40px; }
+      .pa-footer { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .pa-footer .card-enquire { align-self: stretch; text-align: center; }
+
+      /* Footer */
+      footer { padding: 48px 16px; }
+    }
+
+    /* Very small (iPhone SE, etc.) */
+    @media (max-width: 390px) {
+      .hero-eyebrow { font-size: 10px; letter-spacing: 2px; }
+      .nav-item { padding: 0 10px; font-size: 10px; }
+      .card-body { padding: 18px 16px 20px; }
+      .card-name { font-size: 22px; }
+      .pa-body { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <p class="hero-eyebrow">Professional DJ Equipment Hire</p>
+  <h1>DJ<br><em>For Rent</em></h1>
+  <p class="hero-sub">Premium Pioneer DJ Systems &amp; Controllers</p>
+  <div class="hero-divider"></div>
+  <p class="hero-tagline">Club-grade setups delivered for festivals, events, residencies & studio sessions.</p>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M7 2v10M3 8l4 4 4-4"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a href="#elite" class="nav-item">Elite 4-Deck</a>
+    <a href="#pro" class="nav-item">Pro CDJ3000X</a>
+    <a href="#standard" class="nav-item">Standard CDJ3000</a>
+    <a href="#club" class="nav-item">Club CDJ2000</a>
+    <a href="#aio" class="nav-item">All-in-One</a>
+    <a href="#accessories" class="nav-item">Accessories</a>
+    <a href="#pa-system" class="nav-item">PA System</a>
+    <a href="#pa-system-pro" class="nav-item">PA + Subs</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main>
+<div class="section">
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Equipment Catalogue</span>
+    <div class="section-line" style="background: linear-gradient(270deg, var(--border), transparent);"></div>
+  </div>
+
+  <p class="price-note">All prices in Thai Baht (฿) · Per Day · Delivery &amp; Pickup: ฿1,500 · Service area: Phuket</p>
+
+  <!-- ══ ELITE 4-DECK ══ -->
+  <div id="elite" class="tier-header">
+    <span class="tier-badge">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#c9a84c"/></svg>
+      Elite — 4 Deck
+    </span>
+    <div class="tier-sep"></div>
+    <span class="tier-price-range">from ฿30,800 · day</span>
+  </div>
+
+  <div class="cards-grid cards-grid-2">
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ3000 x 4 & DJM V10.PNG" alt="4x CDJ-3000 + DJM-V10" loading="lazy"/>
+        <div class="card-overlay"></div>
+        <span class="card-corner">Best</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">4× CDJ-3000 + DJM-V10</div>
+        <div class="card-components">4 Players · 6-Channel Rotary Mixer</div>
+        <div class="card-desc">The ultimate festival and headline-act setup. Four CDJ-3000 players give you simultaneous control of four tracks, loops and samples — paired with the V10's rotary faders and 4-band EQ to sculpt every frequency of a room-filling sound.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿33,600</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ3000 x 4 & DJM A9.PNG" alt="4x CDJ-3000 + DJM-A9" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">4× CDJ-3000 + DJM-A9</div>
+        <div class="card-components">4 Players · 4-Channel Flagship Mixer</div>
+        <div class="card-desc">Four-deck power with Pioneer's next-generation flagship mixer. The DJM-A9 adds dual USB for seamless B2B handoffs, a phantom-powered mic input, and 32-bit crystal-clear audio — built for marathon club nights and multi-artist events.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿30,800</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ PRO CDJ3000X ══ -->
+  <div id="pro" class="tier-header">
+    <span class="tier-badge">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#c9a84c"/></svg>
+      Pro — CDJ-3000X
+    </span>
+    <div class="tier-sep"></div>
+    <span class="tier-price-range">from ฿16,800 · day</span>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ3000X & DJM V10.jpg" alt="CDJ-3000X + DJM-V10" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">CDJ-3000X + DJM-V10</div>
+        <div class="card-components">3 Players · 6-Channel Rotary Mixer</div>
+        <div class="card-desc">Three CDJ-3000s give you a dedicated loop or sample deck alongside your main two — perfect for layering long blends, live edits, and genre transitions. The V10's rotary faders and built-in compressor let you push the mix to the limits.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿21,000</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ3000X & DJM A9.jpg" alt="CDJ-3000X + DJM-A9" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">CDJ-3000X + DJM-A9</div>
+        <div class="card-components">3 Players · 4-Channel Flagship Mixer</div>
+        <div class="card-desc">Three flagship players with Pioneer's most modern mixer. Run three tracks simultaneously for dynamic live mixing, while the DJM-A9's 14 Beat FX and dual USB keep the set energized and transitions effortless — even with multiple DJs on the night.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿19,600</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ3000 & DJM900nxsMK2.jpg" alt="CDJ-3000X + DJM-900NXS2" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">CDJ-3000X + DJM-900NXS2</div>
+        <div class="card-components">3 Players · 4-Channel Pro Mixer</div>
+        <div class="card-desc">Bring the flexibility of three CDJ-3000 decks with the world's most-installed club mixer. The DJM-900NXS2 is the universal standard in venues globally — your guests will feel right at home, and so will any guest DJ you invite.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿16,800</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ STANDARD CDJ3000 ══ -->
+  <div id="standard" class="tier-header">
+    <span class="tier-badge">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#c9a84c"/></svg>
+      Standard — CDJ-3000
+    </span>
+    <div class="tier-sep"></div>
+    <span class="tier-price-range">from ฿14,000 · day</span>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ3000 & DJM V10.jpg" alt="CDJ-3000 + DJM-V10" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">CDJ-3000 + DJM-V10</div>
+        <div class="card-components">2 Players · 6-Channel Rotary Mixer</div>
+        <div class="card-desc">Pioneer's flagship player meets its most creative mixer. The CDJ-3000's 9" touchscreen and 8 hot cues give you instant control, while the V10's 6 channels let you blend external instruments, samples, or a third DJ into the mix with ease.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿18,200</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ3000 & DJM A9.jpg" alt="CDJ-3000 + DJM-A9" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">CDJ-3000 + DJM-A9</div>
+        <div class="card-components">2 Players · 4-Channel Flagship Mixer</div>
+        <div class="card-desc">The CDJ-3000's 96kHz/32-bit audio shines through the DJM-A9's ESS Technology converters for unmatched sound clarity. Dual USB inputs mean two DJs can be connected simultaneously — no awkward cable swaps between sets.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿16,800</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ3000 & DJM900nxsMK2.jpg" alt="CDJ-3000 + DJM-900NXS2" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">CDJ-3000 + DJM-900NXS2</div>
+        <div class="card-components">2 Players · 4-Channel Pro Mixer</div>
+        <div class="card-desc">The CDJ-3000 paired with the industry's most trusted mixer. The DJM-900NXS2 is the club standard installed in venues worldwide — any DJ you book will know it instantly, and the 64-bit warm sound will fill any room with authority.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿14,000</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ CLUB CDJ2000 ══ -->
+  <div id="club" class="tier-header">
+    <span class="tier-badge">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#c9a84c"/></svg>
+      Club — CDJ-2000NXS2
+    </span>
+    <div class="tier-sep"></div>
+    <span class="tier-price-range">฿11,200 · day</span>
+  </div>
+
+  <div class="cards-grid cards-grid-2">
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/CDJ2000nxsMK2 & DJM900MK2.jpg" alt="CDJ-2000NXS2 + DJM-900NXS2" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">CDJ-2000NXS2 + DJM-900NXS2</div>
+        <div class="card-components">2 Players · 4-Channel Club Mixer</div>
+        <div class="card-desc">The proven classic found in clubs across Asia and beyond. The CDJ-2000NXS2 handles USB, SD, and CD formats with 96kHz/24-bit sound — a dependable, universally familiar rig that every professional DJ is comfortable stepping up to.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿11,200</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ ALL-IN-ONE ══ -->
+  <div id="aio" class="tier-header">
+    <span class="tier-badge">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#c9a84c"/></svg>
+      All-in-One Controllers
+    </span>
+    <div class="tier-sep"></div>
+    <span class="tier-price-range">from ฿5,500 · day</span>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/XDJ-AZ.jpg" alt="XDJ-AZ" loading="lazy"/>
+        <div class="card-overlay"></div>
+        <span class="card-corner">New</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">XDJ-AZ</div>
+        <div class="card-components">Standalone DJ System · Flagship 4-Channel</div>
+        <div class="card-desc">The most advanced all-in-one ever made. One unit replaces a full CDJ-3000 + DJM-A9 rig — with a 10.1" touchscreen, full-size jog wheels, 4-deck playback, and direct streaming from Apple Music, Beatport, and Tidal. No laptop required.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿8,500</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/XDJ-RX3.jpg" alt="XDJ-RX3" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">XDJ-RX3</div>
+        <div class="card-components">Standalone DJ System · 2-Deck</div>
+        <div class="card-desc">Everything you need in one box for bars, corporate events, and private parties. Plug in a USB drive and play — the 10.1" screen (larger than the CDJ-3000) makes track browsing effortless, and DJM-900NXS2-grade FX keep the energy high all night.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿6,500</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/XDJ-XZ.jpg" alt="XDJ-XZ" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">XDJ-XZ</div>
+        <div class="card-components">Standalone DJ System · 4-Deck</div>
+        <div class="card-desc">A compact 4-channel standalone system that punches above its size. Supports Pro DJ Link, so you can connect CDJs on channels 3 & 4 and expand your setup as the event grows. Includes 16 performance pads and Serato DJ Pro compatibility.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿6,500</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/XDJ-RX2.jpg" alt="XDJ-RX2" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">XDJ-RX2</div>
+        <div class="card-components">Standalone DJ System · 2-Deck</div>
+        <div class="card-desc">A reliable, no-fuss standalone system for rehearsals, small venues, and budget-conscious bookings. Load your rekordbox library onto a USB drive and play without a laptop — great as a back-up deck or secondary room setup.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿5,500</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img" src="images/dj-sound-system-images/Omnis Duo.jpg" alt="Omnis Duo" loading="lazy"/>
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Omnis-Duo</div>
+        <div class="card-components">Portable Standalone System · AlphaTheta</div>
+        <div class="card-desc">Take your set anywhere, literally. Battery-powered with up to 5 hours of playtime and Bluetooth audio output — ideal for rooftop parties, beachside events, pop-ups, and any venue where running cables isn't an option. Streams Apple Music directly.</div>
+        <div class="card-footer">
+          <div class="card-price">
+            <span class="card-price-label">Per Day</span>
+            <span class="card-price-value">฿6,500</span>
+            <span class="card-price-unit">/ day</span>
+          </div>
+          <a class="card-enquire" href="#contact">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ ACCESSORIES ══ -->
+  <div id="accessories" class="tier-header">
+    <span class="tier-badge">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#c9a84c"/></svg>
+      Add-ons &amp; Accessories
+    </span>
+    <div class="tier-sep"></div>
+    <span class="tier-price-range">฿5,500 · day</span>
+  </div>
+
+  <div class="add-ons-grid">
+
+    <div class="addon-card">
+      <div class="addon-img-wrap">
+        <img class="addon-img" src="images/dj-sound-system-images/RMX1000.jpg" alt="RMX-1000" loading="lazy"/>
+      </div>
+      <div class="addon-body">
+        <div>
+          <div class="addon-name">RMX-1000</div>
+          <div class="addon-desc">A standalone effects and remix unit that connects to any mixer's Send/Return. Build tension with BPF echo and noise sweeps, drop breakdowns with reverb and spiral effects — all BPM-synced to the master deck for perfectly timed moments.</div>
+        </div>
+        <div style="text-align:right; flex-shrink:0; margin-left:16px;">
+          <div class="addon-price">฿5,500</div>
+          <div class="addon-unit">/ day</div>
+          <a class="card-enquire" href="#contact" style="display:inline-block; margin-top:10px;">Enquire</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══ PA SYSTEM ══ -->
+  <div id="pa-system" class="tier-header">
+    <span class="tier-badge">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#c9a84c"/></svg>
+      PA System Package
+    </span>
+    <div class="tier-sep"></div>
+    <span class="tier-price-range">฿25,000 · day</span>
+  </div>
+
+  <div class="pa-card">
+    <div class="pa-images">
+      <img class="pa-img" src="images/dj-sound-system-images/RCF_NX-915-A-Left.jpg" alt="RCF NX 915-A Left" loading="lazy"/>
+      <img class="pa-img" src="images/dj-sound-system-images/RCF_NX-915-A-Right.jpg" alt="RCF NX 915-A Right" loading="lazy"/>
+    </div>
+    <div class="pa-body">
+      <div>
+        <p class="pa-eyebrow">Professional Active Speaker</p>
+        <h3 class="pa-name">RCF NX 915-A</h3>
+        <p class="pa-tagline">Full PA Package · Live Sound · Events</p>
+
+        <div class="pa-spec-group-label">NX 915-A · Active Speaker</div>
+        <ul class="pa-specs">
+          <li>Up to 131 dB Sound Pressure Level</li>
+          <li>2,100W Class-D Bi-Amplification</li>
+          <li>45–20,000 Hz linear frequency response</li>
+          <li>1.75" Compression Driver for crystal-clear highs</li>
+        </ul>
+
+        <div class="pa-includes">
+          <div class="pa-includes-label">Package Includes</div>
+          <div class="pa-includes-items">
+            2 × RCF NX 915-A Active Speakers<br>
+            1 × 16-Channel Analog Yamaha Mixer<br>
+            2 × Handheld Wireless Microphones<br>
+            Sound Technician<br>
+            Delivery &amp; Installation
+          </div>
+        </div>
+      </div>
+
+      <div class="pa-footer">
+        <div>
+          <div class="pa-price-label">Per Day</div>
+          <div class="pa-price-value">฿25,000</div>
+          <div class="pa-price-unit">/ day · delivery &amp; installation included</div>
+        </div>
+        <a class="card-enquire" href="#contact">Enquire</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ PA SYSTEM + SUB ══ -->
+  <div id="pa-system-pro" class="tier-header">
+    <span class="tier-badge">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#c9a84c"/></svg>
+      PA System + Subwoofer Package
+    </span>
+    <div class="tier-sep"></div>
+    <span class="tier-price-range">฿35,000 · day</span>
+  </div>
+
+  <div class="pa-card">
+    <div class="pa-images pa-images-4">
+      <img class="pa-img" src="images/dj-sound-system-images/RCF_NX-915-A-Left.jpg"     alt="RCF NX 915-A Left"       loading="lazy"/>
+      <img class="pa-img" src="images/dj-sound-system-images/RCF_NX-915-A-Right.jpg"    alt="RCF NX 915-A Right"      loading="lazy"/>
+      <img class="pa-img" src="images/dj-sound-system-images/RCF_SUB-705-A-II-Left.jpg" alt="RCF SUB 705-AS II Left"  loading="lazy"/>
+      <img class="pa-img" src="images/dj-sound-system-images/RCF_SUB-705-A-II-Right.jpg"alt="RCF SUB 705-AS II Right" loading="lazy"/>
+    </div>
+    <div class="pa-body">
+      <div>
+        <p class="pa-eyebrow">Full PA + Subwoofer System</p>
+        <h3 class="pa-name">RCF NX 915-A<br>+ SUB 705-AS II</h3>
+        <p class="pa-tagline">Club · Outdoor Events · Live Shows</p>
+
+        <div class="pa-spec-group-label">NX 915-A · Active Speaker</div>
+        <ul class="pa-specs">
+          <li>Up to 131 dB Sound Pressure Level</li>
+          <li>2,100W Class-D Bi-Amplification</li>
+          <li>45–20,000 Hz linear frequency response</li>
+          <li>1.75" Compression Driver for crystal-clear highs</li>
+        </ul>
+        <div class="pa-spec-group-label" style="margin-top:16px;">SUB 705-AS II · Active Subwoofer</div>
+        <ul class="pa-specs">
+          <li>1,400W Digital Amplifier</li>
+          <li>15" Woofer, bass reflex housing</li>
+          <li>Stereo crossover</li>
+          <li>Switchable crossover frequencies</li>
+        </ul>
+
+        <div class="pa-includes">
+          <div class="pa-includes-label">Package Includes</div>
+          <div class="pa-includes-items">
+            2 × RCF NX 915-A Active Speakers<br>
+            2 × RCF SUB 705-AS II Active Subwoofers<br>
+            1 × 16-Channel Analog Yamaha Mixer<br>
+            2 × Handheld Wireless Microphones<br>
+            Sound Technician<br>
+            Delivery &amp; Installation
+          </div>
+        </div>
+      </div>
+
+      <div class="pa-footer">
+        <div>
+          <div class="pa-price-label">Per Day</div>
+          <div class="pa-price-value">฿35,000</div>
+          <div class="pa-price-unit">/ day · delivery &amp; installation included</div>
+        </div>
+        <a class="card-enquire" href="#contact">Enquire</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /section -->
+</main>
+
+<!-- ═══════════════ BOOKING FORM ═══════════════ -->
+<section class="booking-section" id="contact">
+  <div class="booking-inner">
+
+    <div class="booking-header">
+      <p class="booking-eyebrow">Book Your Equipment</p>
+      <h2 class="booking-title">Make a Reservation</h2>
+      <p class="booking-subtitle">Fill in your details and we'll confirm availability via WhatsApp — usually within the hour.</p>
+      <div class="booking-divider"></div>
+    </div>
+
+    <form class="booking-form" id="bookingForm" onsubmit="sendToWhatsApp(event)">
+
+      <div class="form-group">
+        <label class="form-label" for="name">Your Name <span class="req">*</span></label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Full name" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="phone">Phone / WhatsApp <span class="req">*</span></label>
+        <input class="form-input" type="text" id="phone" name="phone" placeholder="+66 or WhatsApp number" required />
+      </div>
+
+      <div class="form-group full">
+        <label class="form-label" for="email">Email <span class="req">*</span></label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required />
+      </div>
+
+      <div class="form-group full">
+        <label class="form-label" for="dj-equipment">DJ Equipment <span class="req">*</span></label>
+        <select class="form-select" id="dj-equipment" name="dj-equipment" required>
+          <option value="" disabled selected>Select DJ equipment…</option>
+          <option value="None / Not required">None / Not required</option>
+          <optgroup label="— Elite 4-Deck —">
+            <option>4× CDJ-3000 + DJM-V10 — ฿33,600/day</option>
+            <option>4× CDJ-3000 + DJM-A9 — ฿30,800/day</option>
+          </optgroup>
+          <optgroup label="— Pro CDJ-3000X (3 Players) —">
+            <option>CDJ-3000X + DJM-V10 — ฿21,000/day</option>
+            <option>CDJ-3000X + DJM-A9 — ฿19,600/day</option>
+            <option>CDJ-3000X + DJM-900NXS2 — ฿16,800/day</option>
+          </optgroup>
+          <optgroup label="— Standard CDJ-3000 (2 Players) —">
+            <option>CDJ-3000 + DJM-V10 — ฿18,200/day</option>
+            <option>CDJ-3000 + DJM-A9 — ฿16,800/day</option>
+            <option>CDJ-3000 + DJM-900NXS2 — ฿14,000/day</option>
+          </optgroup>
+          <optgroup label="— Club CDJ-2000NXS2 —">
+            <option>CDJ-2000NXS2 + DJM-900NXS2 — ฿11,200/day</option>
+          </optgroup>
+          <optgroup label="— All-in-One Controllers —">
+            <option>XDJ-AZ — ฿8,500/day</option>
+            <option>XDJ-RX3 — ฿6,500/day</option>
+            <option>XDJ-XZ — ฿6,500/day</option>
+            <option>XDJ-RX2 — ฿5,500/day</option>
+            <option>Omnis-Duo — ฿6,500/day</option>
+          </optgroup>
+          <optgroup label="— Accessories —">
+            <option>RMX-1000 — ฿5,500/day</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group full">
+        <label class="form-label" for="sound-system">Sound System <span class="req">*</span></label>
+        <select class="form-select" id="sound-system" name="sound-system" required>
+          <option value="" disabled selected>Select sound system…</option>
+          <option value="None / Not required">None / Not required</option>
+          <optgroup label="— PA System —">
+            <option>RCF NX 915-A Package — ฿25,000/day</option>
+            <option>RCF NX 915-A + SUB 705-AS II Package — ฿35,000/day</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="date">Event Date <span class="req">*</span></label>
+        <input class="form-input" type="date" id="date" name="date" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="days">Number of Days <span class="req">*</span></label>
+        <select class="form-select" id="days" name="days" required>
+          <option value="" disabled selected>Select…</option>
+          <option value="1">1 day</option>
+          <option value="2">2 days</option>
+          <option value="3">3 days</option>
+          <option value="4">4 days</option>
+          <option value="5">5 days</option>
+          <option value="6+">6+ days</option>
+        </select>
+      </div>
+
+      <div class="form-group full">
+        <label class="form-label" for="venue">Venue / Location in Phuket <span class="req">*</span></label>
+        <input class="form-input" type="text" id="venue" name="venue" placeholder="e.g. Patong Beach Club, Kamala Villa…" required />
+      </div>
+
+      <div class="form-group full">
+        <label class="form-label" for="notes">Additional Notes</label>
+        <textarea class="form-textarea" id="notes" name="notes" placeholder="Stage setup, special requirements, preferred delivery time…"></textarea>
+      </div>
+
+      <button type="submit" class="form-submit">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.845L.057 23.571a.75.75 0 00.92.921l5.763-1.476A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.944 9.944 0 01-5.098-1.395l-.364-.218-3.774.968.991-3.7-.236-.373A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+        Send Booking via WhatsApp
+      </button>
+
+      <p class="form-note">Tapping the button opens WhatsApp with your details pre-filled. Delivery &amp; pickup: ฿1,500 flat fee. Service area: Phuket.</p>
+
+    </form>
+  </div>
+</section>
+
+<script>
+function sendToWhatsApp(e) {
+  e.preventDefault();
+  const f = document.getElementById('bookingForm');
+  const name    = f.name.value.trim();
+  const phone   = f.phone.value.trim();
+  const email   = f.email.value.trim() || '—';
+  const djEquip = f['dj-equipment'].value || 'None';
+  const sound   = f['sound-system'].value || 'None';
+  const date    = f.date.value ? new Date(f.date.value).toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'}) : '—';
+  const days    = f.days.value || '—';
+  const venue   = f.venue.value.trim() || '—';
+  const notes   = f.notes.value.trim() || '—';
+
+  const msg =
+`🎧 *DJ Equipment Rental Booking*
+
+*Name:* ${name}
+*Phone / WhatsApp:* ${phone}
+*Email:* ${email}
+
+*DJ Equipment:* ${djEquip}
+*Sound System:* ${sound}
+
+*Event Date:* ${date}
+*Duration:* ${days} day${days !== '1' ? 's' : ''}
+*Venue / Location:* ${venue}
+*Notes:* ${notes}
+
+_Sent via djforrent.com booking form_`;
+
+  const url = 'https://wa.me/66869643159?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+}
+</script>
+
+<!-- ═══════════════ INFO STRIP ═══════════════ -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div>
+      <div class="info-item-icon">◈</div>
+      <div class="info-item-title">Service Area</div>
+      <div class="info-item-body">Available across Phuket —<br>hotels, clubs, villas &amp; venues</div>
+    </div>
+    <div>
+      <div class="info-item-icon">◈</div>
+      <div class="info-item-title">Delivery &amp; Pickup</div>
+      <div class="info-item-body">฿1,500 flat fee covers delivery,<br>setup &amp; pickup after your event</div>
+    </div>
+    <div>
+      <div class="info-item-icon">◈</div>
+      <div class="info-item-title">Rate</div>
+      <div class="info-item-body">All prices are per day ·<br>Multi-day discounts on request</div>
+    </div>
+    <div>
+      <div class="info-item-icon">◈</div>
+      <div class="info-item-title">Condition</div>
+      <div class="info-item-body">All equipment professionally<br>cleaned &amp; tested before each hire</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-logo">DJ For Rent</div>
+  <div class="footer-line"></div>
+  <p class="footer-text">All prices in Thai Baht (฿) · Per day · Delivery &amp; Pickup ฿1,500 · Service area: Phuket</p>
+  <p class="footer-text" style="margin-top:4px; color:#333;">Pioneer DJ · AlphaTheta · Pro Audio Equipment Hire</p>
+</footer>
+
+</body>
+</html>
