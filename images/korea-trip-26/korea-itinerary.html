@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Korea Trip 2025 — Pom & Partner</title>
+<title>Korea Trip 2026 — Pom & Kwan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
@@ -468,15 +468,70 @@ body {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
-  .hero { padding: 60px 24px 40px; }
-  .main { padding: 40px 20px; }
-  .nav-wrap { padding: 0 20px; }
-  .day-header { grid-template-columns: 1fr; gap: 8px; }
+  /* Hero */
+  .hero { padding: 48px 20px 36px; }
+  .hero-eyebrow { font-size: 10px; letter-spacing: 2px; }
+  .hero-title { font-size: 36px; }
+  .hero-sub { font-size: 14px; margin-bottom: 32px; }
+  .hero-stats { gap: 20px; }
+  .hero-stat-num { font-size: 26px; }
+  .hero-stat-label { font-size: 10px; }
+
+  /* Nav */
+  .nav-wrap { padding: 0 16px; }
+  .nav-tab { padding: 14px 14px; font-size: 11px; }
+
+  /* Main */
+  .main { padding: 28px 16px; }
+
+  /* Overview grid — 2 columns on mobile */
+  .overview-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+  .overview-card { padding: 14px 12px; }
+  .overview-icon { font-size: 16px; margin-bottom: 6px; }
+  .overview-val { font-size: 14px; }
+
+  /* Day header */
+  .day-header { grid-template-columns: 1fr; gap: 6px; margin-bottom: 24px; padding-bottom: 20px; }
   .day-num-block { display: flex; align-items: center; gap: 12px; width: auto; }
   .day-num { font-size: 36px; }
+  .day-title { font-size: 22px; }
+
+  /* Story */
+  .day-story { padding: 14px 16px; font-size: 13px; margin-bottom: 24px; }
+
+  /* Meals */
+  .meals-row { gap: 8px; margin-bottom: 28px; }
+  .meal-pill { padding: 7px 12px; font-size: 11px; }
+
+  /* Timeline */
   .timeline { padding-left: 36px; }
-  .stop-marker { left: -30px; }
-  .hero-stats { gap: 24px; }
+  .timeline::before { left: 12px; }
+  .stop-marker { left: -28px; width: 20px; height: 20px; }
+  .stop-marker-dot { width: 7px; height: 7px; }
+  .stop { margin-bottom: 20px; }
+
+  /* Stop cards */
+  .stop-card { padding: 16px 14px; border-radius: 10px; }
+  .stop-head { flex-direction: column; gap: 6px; }
+  .stop-name { font-size: 16px; }
+  .stop-meta { gap: 6px; }
+  .stop-time { font-size: 10px; }
+  .stop-tag { font-size: 9px; padding: 2px 8px; }
+  .stop-highlight { font-size: 11px; }
+  .stop-story { font-size: 13px; }
+  .tip { font-size: 12px; }
+
+  /* Photo */
+  .stop-photo { height: 170px; border-radius: 6px; margin-bottom: 12px; }
+
+  /* Section divider */
+  .section-divider { margin: 36px 0 24px; }
+}
+
+@media (max-width: 380px) {
+  .overview-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 30px; }
+  .stop-photo { height: 140px; }
 }
 </style>
 </head>
@@ -484,9 +539,9 @@ body {
 
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-eyebrow">31 May – 5 June 2025</div>
+  <div class="hero-eyebrow">31 May – 5 June 2026</div>
   <h1 class="hero-title">Korea in <em>Six Days</em></h1>
-  <p class="hero-sub">Jeju Island · Seoul · A trip for two</p>
+  <p class="hero-sub">Jeju Island · Seoul · Pom & Kwan</p>
   <div class="divider-line"></div>
   <div class="hero-stats">
     <div class="hero-stat">
@@ -535,7 +590,7 @@ body {
         <div class="day-num-label">Day</div>
       </div>
       <div>
-        <div class="day-date">Saturday, 31 May 2025</div>
+        <div class="day-date">Saturday, 31 May 2026</div>
         <h2 class="day-title">Transit Day — Incheon to Jeju</h2>
         <p class="day-subtitle">Phuket → Incheon International → Jeju Island</p>
       </div>
@@ -624,7 +679,7 @@ body {
         <div class="day-num-label">Day</div>
       </div>
       <div>
-        <div class="day-date">Sunday, 1 June 2025</div>
+        <div class="day-date">Sunday, 1 June 2026</div>
         <h2 class="day-title">Jeju East — Sunrise Peak & Lava Cave</h2>
         <p class="day-subtitle">An early start rewards you with Jeju's most dramatic scenery</p>
       </div>
@@ -744,7 +799,7 @@ body {
         <div class="day-num-label">Day</div>
       </div>
       <div>
-        <div class="day-date">Monday, 2 June 2025</div>
+        <div class="day-date">Monday, 2 June 2026</div>
         <h2 class="day-title">Jeju Nature — Healing Forest & Aewol Coast</h2>
         <p class="day-subtitle">Jeju's quieter, more romantic side</p>
       </div>
@@ -847,7 +902,7 @@ body {
         <div class="day-num-label">Day</div>
       </div>
       <div>
-        <div class="day-date">Tuesday, 3 June 2025</div>
+        <div class="day-date">Tuesday, 3 June 2026</div>
         <h2 class="day-title">Fly Jeju → Seoul + Gwangjang Market</h2>
         <p class="day-subtitle">Morning farewell to the island, evening arrival in the capital</p>
       </div>
@@ -931,7 +986,7 @@ body {
         <div class="day-num-label">Day</div>
       </div>
       <div>
-        <div class="day-date">Wednesday, 4 June 2025</div>
+        <div class="day-date">Wednesday, 4 June 2026</div>
         <h2 class="day-title">Seoul History — Palaces, Hanok Village & Night Market</h2>
         <p class="day-subtitle">The full cultural Seoul experience in one perfect day</p>
       </div>
@@ -1039,7 +1094,7 @@ body {
         <div class="day-num-label">Day</div>
       </div>
       <div>
-        <div class="day-date">Thursday, 5 June 2025</div>
+        <div class="day-date">Thursday, 5 June 2026</div>
         <h2 class="day-title">Final Morning + Fly Home to Phuket</h2>
         <p class="day-subtitle">Last bites, last photos, then back home</p>
       </div>
@@ -1095,7 +1150,7 @@ body {
 
 <!-- FOOTER -->
 <footer class="footer">
-  Korea Trip 2025 &nbsp;·&nbsp; 31 May – 5 June &nbsp;·&nbsp; Pom & Partner &nbsp;·&nbsp; Jeju Island + Seoul
+  Korea Trip 2026 &nbsp;·&nbsp; 31 May – 5 June &nbsp;·&nbsp; Pom & Kwan &nbsp;·&nbsp; Jeju Island + Seoul
 </footer>
 
 <script>
