@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korea Trip 2025 — Pom & Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --paper: #FBF8F3;
+  --ink: #1A1208;
+  --ink-soft: #4A3F2F;
+  --ink-muted: #8C7E6A;
+  --jeju-green: #2D6A4F;
+  --jeju-green-light: #74C69D;
+  --jeju-green-pale: #D8F3DC;
+  --seoul-red: #B5322A;
+  --seoul-red-light: #E07B74;
+  --seoul-red-pale: #F9E0DE;
+  --gold: #C9A84C;
+  --gold-pale: #F5EDD4;
+  --border: rgba(26,18,8,0.12);
+  --shadow: 0 2px 20px rgba(26,18,8,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 80px 40px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 40px,
+    rgba(255,255,255,0.015) 40px,
+    rgba(255,255,255,0.015) 80px
+  );
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--jeju-green-light);
+}
+.hero-sub {
+  font-size: 16px;
+  color: rgba(245,240,232,0.6);
+  font-weight: 300;
+  margin-bottom: 48px;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.hero-stat {
+  text-align: center;
+}
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+.hero-stat-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+}
+.divider-line {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 40px;
+  opacity: 0.4;
+}
+
+/* ── NAV ── */
+.nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-wrap::-webkit-scrollbar { display: none; }
+.nav-tab {
+  flex: 0 0 auto;
+  padding: 16px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-tab:hover { color: var(--ink); }
+.nav-tab.active {
+  color: var(--jeju-green);
+  border-bottom-color: var(--jeju-green);
+  font-weight: 500;
+}
+.nav-tab.seoul.active {
+  color: var(--seoul-red);
+  border-bottom-color: var(--seoul-red);
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+/* ── DAY PANEL ── */
+.day-panel { display: none; }
+.day-panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.day-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: start;
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+.day-num-block {
+  width: 80px;
+  text-align: center;
+}
+.day-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--jeju-green);
+  display: block;
+}
+.day-num.seoul-day { color: var(--seoul-red); }
+.day-num-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.day-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.day-date {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.day-subtitle {
+  font-size: 14px;
+  color: var(--ink-muted);
+  font-weight: 300;
+}
+
+.day-story {
+  background: var(--paper);
+  border-left: 3px solid var(--jeju-green);
+  padding: 20px 24px;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  margin-bottom: 36px;
+  font-style: italic;
+}
+.day-story.seoul-story { border-left-color: var(--seoul-red); }
+
+/* ── MEALS ROW ── */
+.meals-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.meal-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  font-size: 12px;
+}
+.meal-label {
+  font-weight: 500;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.meal-val { color: var(--ink-soft); }
+
+/* ── TIMELINE ── */
+.timeline {
+  position: relative;
+  padding-left: 52px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
+  background: var(--border);
+}
+
+.stop {
+  position: relative;
+  margin-bottom: 28px;
+}
+.stop-marker {
+  position: absolute;
+  left: -44px;
+  top: 14px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--jeju-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stop-marker.food { border-color: var(--gold); }
+.stop-marker.transport { border-color: var(--ink-muted); }
+.stop-marker.seoul-stop { border-color: var(--seoul-red); }
+.stop-marker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--jeju-green);
+}
+.stop-marker.food .stop-marker-dot { background: var(--gold); }
+.stop-marker.transport .stop-marker-dot { background: var(--ink-muted); }
+.stop-marker.seoul-stop .stop-marker-dot { background: var(--seoul-red); }
+
+.stop-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+  transition: box-shadow 0.2s;
+}
+.stop-card:hover { box-shadow: var(--shadow); }
+
+.stop-photo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+
+.stop-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.stop-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.stop-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.stop-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--ink-muted);
+}
+.stop-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.tag-nature { background: var(--jeju-green-pale); color: var(--jeju-green); }
+.tag-culture { background: #E8E0F5; color: #4A2D8A; }
+.tag-food { background: var(--gold-pale); color: #7A5A1A; }
+.tag-transport { background: #EBEBEB; color: #555; }
+.tag-hike { background: var(--jeju-green-pale); color: var(--jeju-green); }
+.tag-heritage { background: var(--seoul-red-pale); color: var(--seoul-red); }
+
+.stop-highlight {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--jeju-green);
+  margin-bottom: 10px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.5px;
+}
+.stop-highlight.seoul-hl { color: var(--seoul-red); }
+
+.stop-story {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+
+.tips-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.tip {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.55;
+}
+.tip::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 11px;
+  top: 1px;
+}
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 60px 0 40px;
+}
+.section-divider-line { flex: 1; height: 1px; background: var(--border); }
+.section-divider-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* ── TRIP OVERVIEW CARD ── */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.overview-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.overview-icon { font-size: 20px; margin-bottom: 10px; }
+.overview-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+.overview-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--ink);
+  color: var(--cream);
+  text-align: center;
+  padding: 40px;
+  font-size: 12px;
+  color: rgba(245,240,232,0.4);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 1px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .hero { padding: 60px 24px 40px; }
+  .main { padding: 40px 20px; }
+  .nav-wrap { padding: 0 20px; }
+  .day-header { grid-template-columns: 1fr; gap: 8px; }
+  .day-num-block { display: flex; align-items: center; gap: 12px; width: auto; }
+  .day-num { font-size: 36px; }
+  .timeline { padding-left: 36px; }
+  .stop-marker { left: -30px; }
+  .hero-stats { gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">31 May – 5 June 2025</div>
+  <h1 class="hero-title">Korea in <em>Six Days</em></h1>
+  <p class="hero-sub">Jeju Island · Seoul · A trip for two</p>
+  <div class="divider-line"></div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">6</span>
+      <span class="hero-stat-label">Days</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">2</span>
+      <span class="hero-stat-label">Destinations</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">3</span>
+      <span class="hero-stat-label">UNESCO Sites</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">∞</span>
+      <span class="hero-stat-label">Street Food</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav-wrap" id="mainNav">
+  <button class="nav-tab active" data-day="1" onclick="switchDay(1, false)">Day 1 — Arrive Jeju</button>
+  <button class="nav-tab" data-day="2" onclick="switchDay(2, false)">Day 2 — Sunrise Peak</button>
+  <button class="nav-tab" data-day="3" onclick="switchDay(3, false)">Day 3 — Nature Day</button>
+  <button class="nav-tab" data-day="4" onclick="switchDay(4, true)">Day 4 — Fly Seoul</button>
+  <button class="nav-tab" data-day="5" onclick="switchDay(5, true)">Day 5 — Palace Day</button>
+  <button class="nav-tab" data-day="6" onclick="switchDay(6, true)">Day 6 — Fly Home</button>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- DAY 1 -->
+  <div class="day-panel active" id="day-1">
+    <div class="overview-grid">
+      <div class="overview-card"><div class="overview-icon">🛬</div><div class="overview-label">Type</div><div class="overview-val">Transit Day</div></div>
+      <div class="overview-card"><div class="overview-icon">🌙</div><div class="overview-label">Evening</div><div class="overview-val">Dongmun Market</div></div>
+      <div class="overview-card"><div class="overview-icon">🍊</div><div class="overview-label">First Taste</div><div class="overview-val">Jeju Black Pork</div></div>
+      <div class="overview-card"><div class="overview-icon">💰</div><div class="overview-label">Budget Est.</div><div class="overview-val">₩50,000–70,000</div></div>
+    </div>
+    <div class="day-header">
+      <div class="day-num-block">
+        <span class="day-num">01</span>
+        <div class="day-num-label">Day</div>
+      </div>
+      <div>
+        <div class="day-date">Saturday, 31 May 2025</div>
+        <h2 class="day-title">Transit Day — Incheon to Jeju</h2>
+        <p class="day-subtitle">Phuket → Incheon International → Jeju Island</p>
+      </div>
+    </div>
+    <div class="day-story">
+      Today is about arrivals — and first impressions. You land at one of the world's busiest airports, catch a short domestic hop, and by evening you're standing on a volcanic island surrounded by tangerine farms and warm sea air. Don't over-plan today. Let Jeju ease you in gently.
+    </div>
+    <div class="meals-row">
+      <div class="meal-pill"><span class="meal-label">Lunch</span><span class="meal-val">Airport food court (try gimbap or ramyeon)</span></div>
+      <div class="meal-pill"><span class="meal-label">Dinner</span><span class="meal-val">Dongmun Market street food</span></div>
+    </div>
+    <div class="timeline">
+      <div class="stop">
+        <div class="stop-marker transport"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head">
+            <div>
+              <div class="stop-name">Incheon International Airport</div>
+              <div class="stop-meta"><span class="stop-time">Morning — Arrival</span><span class="stop-tag tag-transport">Transit</span></div>
+            </div>
+          </div>
+          <img class="stop-photo" src="Inchon-Intl-Airport.jpg" alt="Incheon International Airport">
+          <div class="stop-highlight">One of Asia's top airports — a city in itself</div>
+          <p class="stop-story">Incheon consistently ranks among the best airports on earth, and it shows. There are art galleries, a Korean cultural experience centre, a golf course, and more food options than most city centres. If you have a 3–4 hour layover, it won't feel like a wait at all.</p>
+          <div class="tips-title">Practical tips</div>
+          <div class="tips-list">
+            <div class="tip">Domestic flights to Jeju depart from Terminal 1 — allow 90 min transfer time</div>
+            <div class="tip">T'money card available at convenience stores — top it up for Jeju taxis</div>
+            <div class="tip">Try Lotteria or Paris Baguette for a quick cheap bite before boarding</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker transport"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head">
+            <div>
+              <div class="stop-name">Jeju City — Arrive & Settle</div>
+              <div class="stop-meta"><span class="stop-time">Evening — Check In</span><span class="stop-tag tag-transport">Arrival</span></div>
+            </div>
+          </div>
+          <div class="stop-highlight">Your first breath of island air</div>
+          <p class="stop-story">Jeju's airport is tiny and friendly — you'll be out and in a taxi within 20 minutes of landing. The island greets you with volcanic rock walls, tangerine trees along every road, and air that smells cleaner than anything back home.</p>
+          <div class="tips-title">Practical tips</div>
+          <div class="tips-list">
+            <div class="tip">Kakao T app is the easiest way to hail taxis on Jeju — download before you land</div>
+            <div class="tip">Central Jeju City hotels are the best base for Days 1–3</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker food"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head">
+            <div>
+              <div class="stop-name">Dongmun Traditional Market</div>
+              <div class="stop-meta"><span class="stop-time">7:00 PM</span><span class="stop-tag tag-food">Night Market</span></div>
+            </div>
+          </div>
+          <img class="stop-photo" src="dongmun-traditional-market.jpg" alt="Dongmun Traditional Market">
+          <div class="stop-highlight">Jeju's oldest market, alive after dark — since 1945</div>
+          <p class="stop-story">Dongmun has been the beating heart of Jeju City since 1945. By day it's a fish and produce market for locals. By night, Gate 8 transforms into a glowing corridor of street food stalls — vendors calling out, seafood sizzling, and the smell of hotteok drifting through the crowd. Your first Korean street food moment: don't rush it.</p>
+          <div class="tips-title">What to eat</div>
+          <div class="tips-list">
+            <div class="tip">Jeju black pork skewers (흑돼지) — Jeju's signature ingredient</div>
+            <div class="tip">Fresh tangerine juice — Jeju grows the best in Korea</div>
+            <div class="tip">Hotteok — sweet stuffed pancakes, crispy outside, molten inside</div>
+            <div class="tip">Cash only at most stalls — bring ₩30,000–50,000 for a relaxed evening</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-panel" id="day-2">
+    <div class="overview-grid">
+      <div class="overview-card"><div class="overview-icon">🌅</div><div class="overview-label">Highlight</div><div class="overview-val">Sunrise Crater</div></div>
+      <div class="overview-card"><div class="overview-icon">🧗</div><div class="overview-label">Activity</div><div class="overview-val">UNESCO Hike</div></div>
+      <div class="overview-card"><div class="overview-icon">🕳️</div><div class="overview-label">Afternoon</div><div class="overview-val">Lava Tube Cave</div></div>
+      <div class="overview-card"><div class="overview-icon">⏰</div><div class="overview-label">Wake Up</div><div class="overview-val">4:30 AM</div></div>
+    </div>
+    <div class="day-header">
+      <div class="day-num-block">
+        <span class="day-num">02</span>
+        <div class="day-num-label">Day</div>
+      </div>
+      <div>
+        <div class="day-date">Sunday, 1 June 2025</div>
+        <h2 class="day-title">Jeju East — Sunrise Peak & Lava Cave</h2>
+        <p class="day-subtitle">An early start rewards you with Jeju's most dramatic scenery</p>
+      </div>
+    </div>
+    <div class="day-story">
+      This is the day that will define your Jeju trip. You'll wake in the dark, hike to the rim of a 180,000-year-old volcanic crater to watch the sun rise over the sea, then descend into a lava tube that runs beneath the island like a frozen river of rock. Two worlds — sky and underground — in one single day.
+    </div>
+    <div class="meals-row">
+      <div class="meal-pill"><span class="meal-label">Breakfast</span><span class="meal-val">Convenience store before departure (onigiri + coffee)</span></div>
+      <div class="meal-pill"><span class="meal-label">Lunch</span><span class="meal-val">Restaurant near Manjanggul — haemul jjigae (seafood stew)</span></div>
+      <div class="meal-pill"><span class="meal-label">Dinner</span><span class="meal-val">Dongmun food street — fire show tteokbokki & grilled lobster</span></div>
+    </div>
+    <div class="timeline">
+      <div class="stop">
+        <div class="stop-marker transport"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Pre-dawn Departure to Seongsan</div>
+            <div class="stop-meta"><span class="stop-time">5:00 AM — Taxi ~40 min</span><span class="stop-tag tag-transport">Early Start</span></div>
+          </div></div>
+          <div class="stop-highlight">Beat the crowds to the most photographed spot in Jeju</div>
+          <p class="stop-story">The drive east from Jeju City in pre-dawn darkness is already atmospheric. Coastal road, occasional lighthouse, the sea invisible but present. Book your taxi the night before via Kakao T — state you need a 5 AM pickup.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Grab a convenience store onigiri and coffee before you leave</div>
+            <div class="tip">Wear layers — pre-dawn at the coast can be cool even in June</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Seongsan Ilchulbong — Sunrise Peak</div>
+            <div class="stop-meta"><span class="stop-time">5:30 AM — 2 hours</span><span class="stop-tag tag-hike">UNESCO Hike</span></div>
+          </div></div>
+          <img class="stop-photo" src="Seongsan-Ilchulbong-Peak.jpg" alt="Seongsan Ilchulbong — Sunrise Peak">
+          <div class="stop-highlight">Sunrise over a 100,000-year-old volcanic crater — ₩5,000 entry</div>
+          <p class="stop-story">Seongsan Ilchulbong erupted from the sea around 100,000 years ago and now stands 182 metres tall, its vast crater still intact. The climb is only 20–25 minutes but steep — stone steps that feel like a staircase to the clouds. At the top, the crater stretches out below you, impossibly green, and beyond it the East China Sea lights up as the sun breaks the horizon. This is why you woke at 5 AM.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Gates open 5:00 AM — June sunrise is around 5:15–5:30 AM, arrive early</div>
+            <div class="tip">Wear sport shoes — the steps are uneven and can be slippery with morning dew</div>
+            <div class="tip">The view looking back toward the coast is just as stunning as the crater view</div>
+            <div class="tip">Entry: ₩5,000 per person</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Udo Island — Optional Morning Detour</div>
+            <div class="stop-meta"><span class="stop-time">8:30 AM — 2 hours</span><span class="stop-tag tag-nature">Island</span></div>
+          </div></div>
+          <img class="stop-photo" src="udo-island.jpeg" alt="Udo Island — Optional Morning Detour">
+          <div class="stop-highlight">Tiny island off Seongsan: white coral beaches & peanut ice cream</div>
+          <p class="stop-story">Just 15 minutes by ferry from Seongsan port, Udo is a quiet island famous for its snow-white Hongjo Beach and haenyeo (diving women) culture. A 2-hour loop by scooter or electric bike is magical if you have the energy after the sunrise hike.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Ferry runs from ~8 AM, return last ferry at 6 PM — ₩6,500 round trip</div>
+            <div class="tip">Skip if you'd rather rest after the early wake-up — Manjanggul is the main event today</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Manjanggul Lava Tube</div>
+            <div class="stop-meta"><span class="stop-time">11:00 AM — 1.5 hours</span><span class="stop-tag tag-hike">UNESCO Cave</span></div>
+          </div></div>
+          <img class="stop-photo" src="Manjanggul-Lava-Tube.jpg" alt="Manjanggul Lava Tube">
+          <div class="stop-highlight">One of the world's longest lava tubes — cool 18°C underground</div>
+          <p class="stop-story">When Hallasan volcano erupted hundreds of thousands of years ago, rivers of lava carved tunnels through the earth as the outer layers cooled and hardened. Today you walk 1 km through that tunnel — cathedral-high ceilings, frozen lava shelves, and at the far end the world's largest lava column standing 7.6 metres tall. The temperature drops 10°C the moment you enter. After the morning heat of Sunrise Peak, it feels like stepping into another dimension.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Entry ₩4,000 per person</div>
+            <div class="tip">Bring a light jacket — 18°C can feel cold after sweating on the morning hike</div>
+            <div class="tip">Wear closed shoes — the floor is raw volcanic rock, uneven and sometimes wet</div>
+            <div class="tip">Allow 1–1.5 hours for the full 1 km walk and return</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker food"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Dongmun Market — Fire Show Night</div>
+            <div class="stop-meta"><span class="stop-time">6:30 PM — Evening</span><span class="stop-tag tag-food">Night Market</span></div>
+          </div></div>
+          <div class="stop-highlight">Second visit — grilled lobster & the famous tteokbokki fire show</div>
+          <p class="stop-story">You saw Dongmun on your first night. Tonight you know what you're doing. Head straight for the famous fire show stall where the vendor performs a theatrical cooking display with crab tteokbokki and grilled lobster. The crowd gathers, the flames go up, and the food is genuinely excellent.</p>
+          <div class="tips-title">What to order</div>
+          <div class="tips-list">
+            <div class="tip">Whole grilled lobster (랍스터) — theatrical and delicious</div>
+            <div class="tip">Crab tteokbokki — the fire show is the main performance here</div>
+            <div class="tip">The "Handsome Youngmen" stall (청년미남들) has the best energy in the market</div>
+            <div class="tip">Best after 7 PM when all stalls are running at full energy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-panel" id="day-3">
+    <div class="overview-grid">
+      <div class="overview-card"><div class="overview-icon">🌲</div><div class="overview-label">Morning</div><div class="overview-val">Healing Forest</div></div>
+      <div class="overview-card"><div class="overview-icon">🌊</div><div class="overview-label">Afternoon</div><div class="overview-val">Aewol Coast Walk</div></div>
+      <div class="overview-card"><div class="overview-icon">☕</div><div class="overview-label">Vibe</div><div class="overview-val">Slow & Romantic</div></div>
+      <div class="overview-card"><div class="overview-icon">🍽️</div><div class="overview-label">Dinner</div><div class="overview-val">Local Bistro</div></div>
+    </div>
+    <div class="day-header">
+      <div class="day-num-block">
+        <span class="day-num">03</span>
+        <div class="day-num-label">Day</div>
+      </div>
+      <div>
+        <div class="day-date">Monday, 2 June 2025</div>
+        <h2 class="day-title">Jeju Nature — Healing Forest & Aewol Coast</h2>
+        <p class="day-subtitle">Jeju's quieter, more romantic side</p>
+      </div>
+    </div>
+    <div class="day-story">
+      Yesterday was dramatic. Today is about breathing. You'll walk through a forest of 800-year-old trees that locals believe have healing properties, then follow the coastline west to Aewol — a stretch of volcanic rock, crashing waves, and stylish cafés that has become Jeju's most beloved couple destination.
+    </div>
+    <div class="meals-row">
+      <div class="meal-pill"><span class="meal-label">Breakfast</span><span class="meal-val">Hotel or café in Jeju City</span></div>
+      <div class="meal-pill"><span class="meal-label">Lunch</span><span class="meal-val">Maeil Olle Market near Bijarim Forest</span></div>
+      <div class="meal-pill"><span class="meal-label">Dinner</span><span class="meal-val">Ollye Juk — Jeju traditional bistro, Seogwipo</span></div>
+    </div>
+    <div class="timeline">
+      <div class="stop">
+        <div class="stop-marker"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Bijarim Healing Forest</div>
+            <div class="stop-meta"><span class="stop-time">9:00 AM — 2 hours</span><span class="stop-tag tag-nature">Ancient Forest</span></div>
+          </div></div>
+          <img class="stop-photo" src="Bijarim-Healing-Forest.jpg" alt="Bijarim Healing Forest">
+          <div class="stop-highlight">800-year-old nutmeg trees and a forest that locals call sacred</div>
+          <p class="stop-story">Bijarim is the only nutmeg (bija) forest in Korea, and it feels genuinely different from ordinary forests. The trees — some over 800 years old and 25 metres tall — grow with an eerie symmetry, their roots knuckled into dark volcanic soil. Visitors walk in near-silence here. There's a 30-minute loop and a 3-hour trail; the shorter one captures the magic without exhausting you before the coastal walk.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Entry: ₩1,500, opens 7 AM</div>
+            <div class="tip">The 30-minute course is ideal — shorter trail hits the most beautiful section</div>
+            <div class="tip">Zero phone signal inside — leave it in your pocket and actually look at the trees</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker food"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Maeil Olle Market — Lunch</div>
+            <div class="stop-meta"><span class="stop-time">11:30 AM</span><span class="stop-tag tag-food">Local Market</span></div>
+          </div></div>
+          <img class="stop-photo" src="Maeil-Olle-Market.webp" alt="Maeil Olle Market — Lunch">
+          <div class="stop-highlight">Small authentic market loved by locals, not tourists</div>
+          <p class="stop-story">This is the market that Jeju residents actually shop at — modest, unhurried, honest food. Grab a proper Korean lunch here after the forest walk. The shrimp vegetable pancake at stalls near the entrance is something special.</p>
+          <div class="tips-title">What to try</div>
+          <div class="tips-list">
+            <div class="tip">Shrimp pancake — crispy, fresh, dip in the tangy sauce provided</div>
+            <div class="tip">Grilled fish set — Jeju seafood at its most honest</div>
+            <div class="tip">Cash-based — bring ₩15,000–20,000 for a full lunch</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Aewol Handam Coastal Walk</div>
+            <div class="stop-meta"><span class="stop-time">3:00 PM — 2–3 hours</span><span class="stop-tag tag-nature">Coastal Trail</span></div>
+          </div></div>
+          <img class="stop-photo" src="Aewol-Handam-Coastal-Walk.bmp" alt="Aewol Handam Coastal Walk">
+          <div class="stop-highlight">Volcanic coastline, windmills, and a café street that stops time</div>
+          <p class="stop-story">The Aewol coastal trail is Jeju at its most quietly beautiful. The path runs along raw black volcanic rock at the edge of the sea, past old windmills that have turned here for generations. As you reach the Aewol café district, the trail opens into a curved street of independent coffee shops — each one perched above the water with floor-to-ceiling windows. Sit down. Watch the waves. Stay longer than you planned.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Open 24 hours, but 3–6 PM is the golden hour light window for photos</div>
+            <div class="tip">Allow 2–3 hours minimum for a relaxed walk and café stop</div>
+            <div class="tip">Wear comfortable shoes — the volcanic rock path has uneven sections</div>
+            <div class="tip">Café Monsant and Caffe Bora are both on this strip — worth the queue</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker food"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Ollye Juk — Jeju Traditional Bistro</div>
+            <div class="stop-meta"><span class="stop-time">7:00 PM — Dinner</span><span class="stop-tag tag-food">Dinner</span></div>
+          </div></div>
+          <div class="stop-highlight">Cosy traditional Korean dinner with locally-sourced Jeju ingredients</div>
+          <p class="stop-story">This small bistro near Seogwipo has quietly become a favourite among food-aware travellers. The shrimp vegetable pancake is crispy and delicate; the fried pork slices arrive golden; the bean paste tofu soup warms you from the inside. No frills, no pretension — just honest, delicious food.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Reservations recommended — small space, fills up by 7:30 PM</div>
+            <div class="tip">Try the pork set for two — includes pancake, grilled fish, and soup</div>
+            <div class="tip">The radish banchan with black pepper is unusual and genuinely addictive</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-panel" id="day-4">
+    <div class="overview-grid">
+      <div class="overview-card"><div class="overview-icon">✈️</div><div class="overview-label">Route</div><div class="overview-val">Jeju → Seoul</div></div>
+      <div class="overview-card"><div class="overview-icon">🏙️</div><div class="overview-label">Destination</div><div class="overview-val">Seoul Arrives</div></div>
+      <div class="overview-card"><div class="overview-icon">🥟</div><div class="overview-label">Dinner</div><div class="overview-val">Gwangjang Market</div></div>
+      <div class="overview-card"><div class="overview-icon">⚠️</div><div class="overview-label">Note</div><div class="overview-val">Palace closed Tue</div></div>
+    </div>
+    <div class="day-header">
+      <div class="day-num-block">
+        <span class="day-num seoul-day">04</span>
+        <div class="day-num-label">Day</div>
+      </div>
+      <div>
+        <div class="day-date">Tuesday, 3 June 2025</div>
+        <h2 class="day-title">Fly Jeju → Seoul + Gwangjang Market</h2>
+        <p class="day-subtitle">Morning farewell to the island, evening arrival in the capital</p>
+      </div>
+    </div>
+    <div class="day-story seoul-story">
+      Your last morning in Jeju is bittersweet — you'll be back someday. The domestic flight to Seoul is barely an hour, but the transition is total: from volcanic island silence to the buzzing, neon-lit density of Korea's 10-million-person capital. Tonight you dive straight into one of Seoul's most legendary food experiences.
+    </div>
+    <div class="meals-row">
+      <div class="meal-pill"><span class="meal-label">Breakfast</span><span class="meal-val">Hotel or Jeju airport café</span></div>
+      <div class="meal-pill"><span class="meal-label">Lunch</span><span class="meal-val">Gimpo Airport on arrival</span></div>
+      <div class="meal-pill"><span class="meal-label">Dinner</span><span class="meal-val">Gwangjang Market — full food crawl</span></div>
+    </div>
+    <div class="timeline">
+      <div class="stop">
+        <div class="stop-marker transport"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Check Out & Fly to Seoul</div>
+            <div class="stop-meta"><span class="stop-time">8:00 AM — ~55 min flight</span><span class="stop-tag tag-transport">Departure</span></div>
+          </div></div>
+          <div class="stop-highlight">Short 1-hour domestic hop from Jeju to Seoul Gimpo Airport</div>
+          <p class="stop-story">Jeju Airport is wonderfully small and calm. Domestic security takes 10 minutes. Buy one last bag of Jeju tangerine chocolate at the duty-free kiosks before you board — far cheaper here than anywhere in Seoul.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Gimpo (GMP) is closer to central Seoul than Incheon — you'll be at your hotel by noon</div>
+            <div class="tip">Buy Jeju-specific souvenirs here: tangerine chocolate, black sesame crackers</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker transport"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Check In — Seoul Hotel</div>
+            <div class="stop-meta"><span class="stop-time">12:00 PM — Afternoon</span><span class="stop-tag tag-transport">Check-in</span></div>
+          </div></div>
+          <div class="stop-highlight">Base yourself in Myeongdong, Insadong, or Hongdae for Days 4–6</div>
+          <p class="stop-story">For a couple on a mid-range budget, the sweet spot is Myeongdong or Insadong — central, walkable, and close to everything on the itinerary. Get rest, freshen up, and save your energy for the evening market.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Recommended: Myeongdong (shopping access), Insadong (quieter, cultural)</div>
+            <div class="tip">Kakao T works perfectly in Seoul — your default taxi app for the rest of the trip</div>
+            <div class="tip">Get a SIM or pocket WiFi at Gimpo if you haven't already</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker food"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Gwangjang Market — Dinner</div>
+            <div class="stop-meta"><span class="stop-time">5:00 PM — Evening</span><span class="stop-tag tag-food">Historic Market</span></div>
+          </div></div>
+          <img class="stop-photo" src="gwangjang_market_seoul_korea.jpg" alt="Gwangjang Market — Dinner">
+          <div class="stop-highlight">Seoul's oldest covered market, open since 1905</div>
+          <p class="stop-story">Gwangjang Market has been feeding Seoul since 1905, and the food section in the evening is one of the city's greatest sensory experiences. The central food hall is lined with grandmother vendors who have been making the same dishes for decades. The most famous: bindaetteok — thick, savoury mung bean pancakes fried crispy on a cast-iron griddle, best eaten with makgeolli (rice wine). At the far entrance, a stall always has a 30-person queue for its twisted glutinous rice donut. The queue moves fast. Get in it.</p>
+          <div class="tips-title">Must-eat list</div>
+          <div class="tips-list">
+            <div class="tip">Bindaetteok (mung bean pancake) + makgeolli pairing — the definitive Gwangjang combo</div>
+            <div class="tip">Twisted rice donut stall at the main entrance — tiny, cheap, perfect</div>
+            <div class="tip">Mayak gimbap — mini kimbap rolls with mustard dipping sauce, addictive</div>
+            <div class="tip">Yukhoe — Korean beef tartare if you're adventurous</div>
+            <div class="tip">Cash only at most stalls — bring ₩40,000–60,000 for a full evening</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-panel" id="day-5">
+    <div class="overview-grid">
+      <div class="overview-card"><div class="overview-icon">🏯</div><div class="overview-label">Morning</div><div class="overview-val">Gyeongbokgung</div></div>
+      <div class="overview-card"><div class="overview-icon">🏘️</div><div class="overview-label">Midday</div><div class="overview-val">Bukchon Village</div></div>
+      <div class="overview-card"><div class="overview-icon">🎨</div><div class="overview-label">Afternoon</div><div class="overview-val">Insadong</div></div>
+      <div class="overview-card"><div class="overview-icon">🌃</div><div class="overview-label">Night</div><div class="overview-val">Myeongdong Market</div></div>
+    </div>
+    <div class="day-header">
+      <div class="day-num-block">
+        <span class="day-num seoul-day">05</span>
+        <div class="day-num-label">Day</div>
+      </div>
+      <div>
+        <div class="day-date">Wednesday, 4 June 2025</div>
+        <h2 class="day-title">Seoul History — Palaces, Hanok Village & Night Market</h2>
+        <p class="day-subtitle">The full cultural Seoul experience in one perfect day</p>
+      </div>
+    </div>
+    <div class="day-story seoul-story">
+      Today is the day Seoul reveals its depth. You'll walk through a 15th-century royal palace still standing in the heart of a modern megacity, wander hillside alleyways where traditional wooden homes have survived wars and demolitions, browse an artisan street that has refused to become a mall, and end the night eating skewers in a market that lights up like a carnival.
+    </div>
+    <div class="meals-row">
+      <div class="meal-pill"><span class="meal-label">Breakfast</span><span class="meal-val">Hotel or café near accommodation</span></div>
+      <div class="meal-pill"><span class="meal-label">Lunch</span><span class="meal-val">Near Bukchon — bibimbap or sundubu jjigae</span></div>
+      <div class="meal-pill"><span class="meal-label">Dinner</span><span class="meal-val">Myeongdong Night Market — full street food run</span></div>
+    </div>
+    <div class="timeline">
+      <div class="stop">
+        <div class="stop-marker seoul-stop"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Gyeongbokgung Palace</div>
+            <div class="stop-meta"><span class="stop-time">9:00 AM — 2.5 hours</span><span class="stop-tag tag-heritage">Royal Palace</span></div>
+          </div></div>
+          <img class="stop-photo" src="Gyeongbokgung-Palace.jpg" alt="Gyeongbokgung Palace">
+          <div class="stop-highlight seoul-hl">The 'Palace of Shining Happiness' — built 1395, still breathtaking</div>
+          <p class="stop-story">Gyeongbokgung was the heart of the Joseon Dynasty for over 500 years. The Japanese burned it in 1592. The Koreans rebuilt it. The Japanese demolished most of it during colonial occupation. The Koreans rebuilt it again — and are still rebuilding it today. What stands now is a testament to cultural stubbornness: 13 restored structures on a 400,000 m² compound. Rent a Hanbok at the south gate — entry becomes free and your photos will be extraordinary.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Arrives early at 9 AM — tour groups flood in after 10</div>
+            <div class="tip">Hanbok rental: ₩15,000–20,000 for 2–3 hours — wearers enter FREE</div>
+            <div class="tip">Royal Guard Changing Ceremony: 10 AM and 2 PM at Gwanghwamun Gate</div>
+            <div class="tip">Closed Tuesdays — we scheduled this for Wednesday, no issue!</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker seoul-stop"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Bukchon Hanok Village</div>
+            <div class="stop-meta"><span class="stop-time">11:30 AM — 1.5 hours</span><span class="stop-tag tag-heritage">Living Heritage</span></div>
+          </div></div>
+          <img class="stop-photo" src="Bukchon-Hanok-Village.png" alt="Bukchon Hanok Village">
+          <div class="stop-highlight seoul-hl">600-year-old wooden homes still lived in today</div>
+          <p class="stop-story">Bukchon sits on the hillside between two palaces and has been a residential neighbourhood for Korean aristocracy since the Joseon era. Today, around 900 hanok survive here — many converted into guesthouses or tea rooms, but many still private family homes. The alleyway views from Bukchon-ro 11-gil are among the most photographed in all of Korea. Walk quietly — people actually live here.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">10-minute walk from Gyeongbokgung's northeast gate — perfect morning combo</div>
+            <div class="tip">The iconic viewpoint: Bukchon-ro 11-gil (signed 'Bukchon Viewpoint' on maps)</div>
+            <div class="tip">Arrive before 11 AM to avoid afternoon crowds</div>
+            <div class="tip">Visiting hours: 10 AM – 5 PM only — residential area, please be quiet</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker seoul-stop"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Insadong Culture Street</div>
+            <div class="stop-meta"><span class="stop-time">1:30 PM — 2 hours</span><span class="stop-tag tag-culture">Arts District</span></div>
+          </div></div>
+          <img class="stop-photo" src="Insadong-Culture-Street.jpg" alt="Insadong Culture Street">
+          <div class="stop-highlight seoul-hl">The street that refused to become a shopping mall</div>
+          <p class="stop-story">While most of Seoul's traditional commercial streets were bulldozed for glass towers, Insadong held on. Today it's a long pedestrian street lined with art galleries, traditional tea houses hidden in courtyards, celadon pottery shops, and calligraphy stalls. Hidden inside Ssamziegil courtyard is a winding spiral walkway of independent studios. The kind of place where you accidentally spend three hours browsing ceramics and eating street waffles.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Ssamziegil courtyard: look for the entrance at 44 Insadong-gil</div>
+            <div class="tip">Best souvenir: handmade hanji notebooks or small celadon pieces</div>
+            <div class="tip">Try egg bread (계란빵) from street carts — warm, eggy, comforting</div>
+            <div class="tip">Open from 10 AM, most atmospheric after 11 AM on weekdays</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker food"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Myeongdong Night Market</div>
+            <div class="stop-meta"><span class="stop-time">6:30 PM — Late Night</span><span class="stop-tag tag-food">Night Market</span></div>
+          </div></div>
+          <img class="stop-photo" src="Myeongdong-Night-Market.webp" alt="Myeongdong Night Market">
+          <div class="stop-highlight seoul-hl">Seoul's most electric street food strip — open until 1 AM</div>
+          <p class="stop-story">Myeongdong by day is a shopping district. By night it's a different animal entirely. From 6 PM the vendors set up — hundreds of them, all the way down the main pedestrian street and into side lanes. The food is louder here than anywhere else in Seoul: vendors call out, giant portions steam in the cold air, tourists and locals queue side by side for the same skewers.</p>
+          <div class="tips-title">Must-eat list</div>
+          <div class="tips-list">
+            <div class="tip">Tanghulu — candy-coated fruit skewers, essential Myeongdong experience</div>
+            <div class="tip">Cheese corn dog — look for the queue, it's there for a reason</div>
+            <div class="tip">Haemul pajeon (seafood scallion pancake) from side-street sit-down stalls</div>
+            <div class="tip">Tteokbokki — spicy rice cakes, the quintessential Korean street snack</div>
+            <div class="tip">Cash preferred — some carts accept card, most don't</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-panel" id="day-6">
+    <div class="overview-grid">
+      <div class="overview-card"><div class="overview-icon">🌅</div><div class="overview-label">Morning</div><div class="overview-val">Gwanghwamun Gate</div></div>
+      <div class="overview-card"><div class="overview-icon">🛍️</div><div class="overview-label">Airport</div><div class="overview-val">Duty-Free Haul</div></div>
+      <div class="overview-card"><div class="overview-icon">✈️</div><div class="overview-label">Depart</div><div class="overview-val">Seoul → Phuket</div></div>
+      <div class="overview-card"><div class="overview-icon">⏰</div><div class="overview-label">Airport</div><div class="overview-val">3 hrs before flight</div></div>
+    </div>
+    <div class="day-header">
+      <div class="day-num-block">
+        <span class="day-num seoul-day">06</span>
+        <div class="day-num-label">Day</div>
+      </div>
+      <div>
+        <div class="day-date">Thursday, 5 June 2025</div>
+        <h2 class="day-title">Final Morning + Fly Home to Phuket</h2>
+        <p class="day-subtitle">Last bites, last photos, then back home</p>
+      </div>
+    </div>
+    <div class="day-story seoul-story">
+      Every great trip has a goodbye ritual. Yours is standing at Gwanghwamun Gate in the soft morning light, the palace behind you and Seoul's skyline ahead, before the city wakes up. Then duty-free snacks, a window seat, and the long reflection on six days that felt like much more.
+    </div>
+    <div class="meals-row">
+      <div class="meal-pill"><span class="meal-label">Breakfast</span><span class="meal-val">Hotel breakfast or café near accommodation</span></div>
+      <div class="meal-pill"><span class="meal-label">Snack</span><span class="meal-val">Airport duty-free — Korean snacks for the flight home</span></div>
+    </div>
+    <div class="timeline">
+      <div class="stop">
+        <div class="stop-marker seoul-stop"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Gwanghwamun Gate — Morning Walk</div>
+            <div class="stop-meta"><span class="stop-time">9:00 AM — 45 min</span><span class="stop-tag tag-heritage">Farewell Stop</span></div>
+          </div></div>
+          <div class="stop-highlight seoul-hl">The great gate of Joseon, standing since 1395</div>
+          <p class="stop-story">Gwanghwamun is the main gate of Gyeongbokgung Palace and has survived Japanese colonial erasure, the Korean War, and six centuries of history. In the morning light, before tourist crowds arrive, it's quietly magnificent — stone and painted wood framed by the Bugaksan mountain and Sejongno boulevard stretching south. Take your best couple photo of the trip. Say goodbye to Seoul properly.</p>
+          <div class="tips-title">Tips</div>
+          <div class="tips-list">
+            <div class="tip">Open 24 hours — no entry fee for the gate area</div>
+            <div class="tip">The Sejong Story underground exhibition is free and surprisingly worthwhile</div>
+            <div class="tip">Changing of guards at the gate: 10 AM if your flight allows time</div>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-marker transport"><div class="stop-marker-dot"></div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div>
+            <div class="stop-name">Head to Incheon Airport</div>
+            <div class="stop-meta"><span class="stop-time">11:00 AM — Allow 3+ hours</span><span class="stop-tag tag-transport">Departure</span></div>
+          </div></div>
+          <div class="stop-highlight">AREX express: Seoul Station → Incheon T1 in 43 minutes</div>
+          <p class="stop-story">The AREX express train from Seoul Station runs directly to Incheon Terminal 1 in 43 minutes — clean, cheap (₩9,500), and perfectly timed. Or take a taxi if you're carrying heavy luggage and prefer door-to-door. Allow a full 3 hours before your international departure.</p>
+          <div class="tips-title">Best duty-free buys</div>
+          <div class="tips-list">
+            <div class="tip">Korean red ginseng — the gold standard souvenir</div>
+            <div class="tip">Honey butter almonds — dangerously addictive, hard to find outside Korea</div>
+            <div class="tip">Choco Pies (big box) — the iconic Korean snack</div>
+            <div class="tip">Jeju tangerine snacks if you didn't buy enough at the island</div>
+            <div class="tip">One last cup of Korean convenience store coffee before you board</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  Korea Trip 2025 &nbsp;·&nbsp; 31 May – 5 June &nbsp;·&nbsp; Pom & Partner &nbsp;·&nbsp; Jeju Island + Seoul
+</footer>
+
+<script>
+function switchDay(num, isSeoul) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('day-' + num).classList.add('active');
+  const btn = document.querySelector('[data-day="' + num + '"]');
+  btn.classList.add('active');
+  if (isSeoul) btn.classList.add('seoul');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
