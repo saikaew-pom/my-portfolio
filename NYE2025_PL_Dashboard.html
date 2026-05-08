@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NYE P&L Dashboard — JW Marriott Khao Lak</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+
+/* ── Header ── */
+.header{background:linear-gradient(135deg,#1a1f3c 0%,#0d1b35 100%);border-bottom:3px solid #c9a84c;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.header h1{font-size:20px;font-weight:700;color:#fff}
+.header h1 span{color:#c9a84c}
+.header .meta{font-size:11px;color:#64748b;text-align:right;line-height:1.8}
+
+/* ── Year Selector ── */
+.year-bar{background:#111827;border-bottom:1px solid #1e293b;padding:14px 40px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;position:sticky;top:0;z-index:50}
+.year-bar .year-label{font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.year-tabs{display:flex;gap:6px}
+.ytab{padding:7px 18px;border-radius:20px;border:1.5px solid #334155;background:transparent;color:#94a3b8;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.ytab:hover{border-color:#c9a84c;color:#c9a84c}
+.ytab.active{background:#c9a84c;border-color:#c9a84c;color:#0f172a}
+.view-tabs{display:flex;gap:6px;margin-left:auto}
+.vtab{padding:6px 14px;border-radius:6px;border:1px solid #334155;background:transparent;color:#64748b;font-size:11px;cursor:pointer;transition:all .2s}
+.vtab.active{background:#1e293b;color:#c9a84c;border-color:#c9a84c}
+.compare-badge{font-size:11px;color:#64748b;padding:4px 10px;background:#1e293b;border-radius:6px;border:1px solid #334155}
+
+/* ── Layout ── */
+.container{padding:24px 36px;max-width:1400px;margin:0 auto}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
+.grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+
+/* ── KPI Card ── */
+.kpi{background:#1e293b;border-radius:12px;padding:18px 20px;border-left:4px solid #c9a84c;position:relative;overflow:hidden;transition:all .3s}
+.kpi::after{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;background:rgba(201,168,76,.05)}
+.kpi .label{font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.kpi .value{font-size:24px;font-weight:800;color:#f1f5f9;line-height:1;transition:all .4s}
+.kpi .sub{font-size:11px;color:#64748b;margin-top:5px}
+.kpi .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700;margin-top:8px;transition:all .3s}
+.kpi .sparkline{margin-top:10px;height:32px}
+.badge-up{background:#14532d;color:#86efac}
+.badge-down{background:#7f1d1d;color:#fca5a5}
+.badge-warn{background:#713f12;color:#fcd34d}
+.badge-neu{background:#1e293b;color:#64748b;border:1px solid #334155}
+.kpi.gold{border-left-color:#c9a84c}
+.kpi.teal{border-left-color:#0d9488}
+.kpi.green{border-left-color:#16a34a}
+.kpi.red{border-left-color:#dc2626}
+.kpi.blue{border-left-color:#3b82f6}
+
+/* ── Chart Card ── */
+.card{background:#1e293b;border-radius:12px;padding:20px 22px;transition:all .3s}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;border-bottom:1px solid #334155;padding-bottom:10px;flex-wrap:wrap;gap:8px}
+.card h3{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.7px}
+.card canvas{max-height:250px}
+.chart-note{font-size:10px;color:#475569;margin-top:8px;text-align:center;font-style:italic}
+
+/* ── Table ── */
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:#0f172a;color:#64748b;font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.6px;padding:10px 12px;text-align:right;cursor:pointer;user-select:none;transition:color .2s}
+th:first-child{text-align:left;cursor:default}
+th:hover:not(:first-child){color:#c9a84c}
+th.active-col{color:#c9a84c !important;background:#162032}
+td{padding:8px 12px;border-bottom:1px solid #1e293b;color:#cbd5e1;text-align:right;transition:background .2s}
+td:first-child{text-align:left;color:#f1f5f9;font-weight:600}
+tr:hover td{background:#1e3a5f33}
+.tr-total td{font-weight:700;color:#c9a84c;background:#162032;border-top:2px solid #334155}
+.tr-gop td{font-weight:700;color:#4ade80;background:#0f2a1e}
+td.active-col{background:#162032 !important;color:#c9a84c !important;font-weight:700}
+td.gop-col{background:#0f2a1e !important;color:#4ade80 !important;font-weight:700}
+.pos{color:#4ade80}.neg{color:#f87171}.warn{color:#fbbf24}
+
+/* ── Filter pill ── */
+.filter-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fpill{padding:4px 12px;border-radius:12px;font-size:11px;border:1px solid #334155;background:transparent;color:#64748b;cursor:pointer;transition:all .2s}
+.fpill.active{background:#1e293b;color:#c9a84c;border-color:#c9a84c}
+
+/* ── PAX bars ── */
+.pax-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pax-row .lbl{width:160px;font-size:11px;color:#94a3b8;flex-shrink:0}
+.pax-row .bar-wrap{flex:1;background:#0f172a;border-radius:4px;height:22px;overflow:hidden}
+.pax-row .bar{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:#fff;transition:width .5s ease}
+.pax-row .cnt{width:90px;text-align:right;font-size:12px;color:#f1f5f9;font-weight:700}
+
+/* ── Cost list ── */
+.cost-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #1e293b}
+.cost-row:last-child{border:none}
+.cost-lbl{font-size:12px;color:#94a3b8}
+.cost-val{font-size:13px;font-weight:700;color:#e2e8f0;text-align:right}
+.cost-pct{font-size:10px;color:#475569;margin-top:2px}
+.cost-bar-mini{height:3px;background:#c9a84c;border-radius:2px;margin-top:4px;transition:width .5s}
+
+/* ── Alert ── */
+.alert{border-radius:8px;padding:11px 16px;margin-bottom:18px;font-size:12.5px;display:flex;gap:10px;align-items:center;transition:all .4s}
+.alert-red{background:#7f1d1d;border:1px solid #dc2626;color:#fca5a5}
+.alert-gold{background:#713f12;border:1px solid #d97706;color:#fcd34d}
+.alert-green{background:#14532d;border:1px solid #16a34a;color:#86efac}
+
+/* ── Tabs inside cards ── */
+.inner-tabs{display:flex;gap:4px;background:#0f172a;border-radius:8px;padding:3px}
+.inner-tab{padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;color:#64748b;cursor:pointer;transition:all .2s}
+.inner-tab.active{background:#1e293b;color:#c9a84c}
+
+/* ── Transition animation ── */
+.fade-in{animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ── Waterfall bars ── */
+.wf-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.wf-lbl{width:140px;font-size:11px;color:#94a3b8;text-align:right;flex-shrink:0}
+.wf-track{flex:1;background:#0f172a;border-radius:4px;height:28px;position:relative;overflow:hidden}
+.wf-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:700;color:#fff;transition:width .6s ease;white-space:nowrap;overflow:hidden}
+.wf-val{width:90px;text-align:right;font-size:11px;color:#94a3b8;flex-shrink:0}
+
+/* ── Section label ── */
+.section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+.section-header h2{font-size:15px;font-weight:700;color:#f1f5f9}
+.section-header .pill{font-size:10px;color:#c9a84c;background:#1a1f3c;border:1px solid #c9a84c44;padding:2px 8px;border-radius:10px}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .grid-4,.grid-3{grid-template-columns:1fr 1fr}
+  .grid-2,.grid-2-1{grid-template-columns:1fr}
+  .container{padding:16px 20px}
+  .header,.year-bar{padding:14px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <h1>NYE P&L <span>Dashboard</span></h1>
+    <div style="font-size:11px;color:#64748b;margin-top:3px">JW Marriott Khao Lak · Financial Year Review</div>
+  </div>
+  <div class="meta">
+    <div>Data: <strong style="color:#c9a84c">2023 · 2024 · 2025</strong></div>
+    <div>Currency: Thai Baht (THB) excl. VAT</div>
+    <div id="lastUpdated">Last updated: May 2026</div>
+  </div>
+</div>
+
+<!-- YEAR SELECTOR -->
+<div class="year-bar">
+  <span class="year-label">Year</span>
+  <div class="year-tabs">
+    <button class="ytab" data-year="2023" onclick="setYear(2023)">2023</button>
+    <button class="ytab" data-year="2024" onclick="setYear(2024)">2024</button>
+    <button class="ytab active" data-year="2025" onclick="setYear(2025)">2025</button>
+  </div>
+  <button class="vtab active" id="btn-compare" onclick="setMode('compare')">⇄ Compare All</button>
+  <button class="vtab" id="btn-single" onclick="setMode('single')">Year Focus</button>
+  <span class="compare-badge" id="compareBadge">Showing: 2025 vs 2024</span>
+</div>
+
+<div class="container">
+
+  <!-- ALERT -->
+  <div class="alert alert-red" id="alertBanner">
+    ⚠ <span id="alertText">GOP dropped to <strong>2.6%</strong> in 2025 (vs 18.7% in 2024). Entertainment costs surged +437K YoY — consuming 54% of total revenue.</span>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="grid-4" id="kpiRow">
+    <div class="kpi gold">
+      <div class="label">Total Revenue</div>
+      <div class="value" id="kpi-rev">3.06M</div>
+      <div class="sub" id="kpi-rev-sub">3,061,938 THB</div>
+      <span class="badge badge-up" id="kpi-rev-badge">▲ +3.9% vs 2024</span>
+    </div>
+    <div class="kpi teal">
+      <div class="label">Total PAX</div>
+      <div class="value" id="kpi-pax">248</div>
+      <div class="sub" id="kpi-pax-sub">Covers sold</div>
+      <span class="badge badge-down" id="kpi-pax-badge">▼ −31 vs 2024</span>
+    </div>
+    <div class="kpi red">
+      <div class="label">Total Cost</div>
+      <div class="value" id="kpi-cost">2.98M</div>
+      <div class="sub" id="kpi-cost-sub">2,981,133 THB</div>
+      <span class="badge badge-down" id="kpi-cost-badge">▲ +24.4% vs 2024</span>
+    </div>
+    <div class="kpi red">
+      <div class="label">GOP</div>
+      <div class="value" id="kpi-gop">80,805</div>
+      <div class="sub" id="kpi-gop-sub">2.64% margin</div>
+      <span class="badge badge-down" id="kpi-gop-badge">▼ −16.1 pts vs 2024</span>
+    </div>
+  </div>
+
+  <!-- TREND + REVENUE -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <h3>3-Year Trend — Revenue, Cost &amp; GOP</h3>
+        <div class="inner-tabs" id="trendTabs">
+          <div class="inner-tab active" onclick="setTrendMode('all')">All</div>
+          <div class="inner-tab" onclick="setTrendMode('gop')">GOP only</div>
+          <div class="inner-tab" onclick="setTrendMode('cover')">Per Cover</div>
+        </div>
+      </div>
+      <canvas id="trendChart"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3 id="revChartTitle">Revenue by Category</h3>
+        <span style="font-size:10px;color:#475569" id="revChartNote">2025 data</span>
+      </div>
+      <canvas id="revChart"></canvas>
+    </div>
+  </div>
+
+  <!-- WATERFALL + PAX -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <h3 id="wfTitle">Cost Structure — 2025</h3>
+      </div>
+      <div id="wfChart"></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3 id="paxTitle">PAX Mix</h3>
+        <span style="font-size:10px;color:#475569" id="paxNote">2025 detail</span>
+      </div>
+      <div id="paxMix"></div>
+      <div style="margin-top:16px;border-top:1px solid #334155;padding-top:14px">
+        <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px">Revenue per Cover</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="coverCards"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YOY TABLE -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-header">
+      <h3>Year-on-Year P&amp;L Summary</h3>
+      <div class="filter-row">
+        <span style="font-size:10px;color:#475569">Click column header to highlight</span>
+        <button class="fpill active" onclick="toggleRow('all')">All rows</button>
+        <button class="fpill" onclick="toggleRow('rev')">Revenue</button>
+        <button class="fpill" onclick="toggleRow('cost')">Cost</button>
+        <button class="fpill" onclick="toggleRow('gop')">GOP</button>
+      </div>
+    </div>
+    <table id="yoyTable">
+      <thead>
+        <tr>
+          <th>Line Item</th>
+          <th onclick="highlightCol(1)" id="th-2023">2023</th>
+          <th onclick="highlightCol(2)" id="th-2024">2024</th>
+          <th onclick="highlightCol(3)" id="th-2025">2025 ▼</th>
+          <th>Δ 2025 vs 2024</th>
+          <th>Δ %</th>
+        </tr>
+      </thead>
+      <tbody id="yoyBody"></tbody>
+    </table>
+  </div>
+
+  <!-- COST DETAIL -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <h3 id="costDetailTitle">Operating Cost Detail</h3>
+      </div>
+      <div id="costDetail"></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Cost Breakdown</h3>
+      </div>
+      <canvas id="costChart" style="max-height:240px"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════════════
+const YEARS = [2023, 2024, 2025];
+const D = {
+  2023: {
+    revenue: 2654528, cost: 2284456, gop: 370072, gopPct: 13.94, pax: 199,
+    revPerCover: 13340, costPerCover: 11479,
+    revBreak: [
+      { label: 'Adult Silver', val: 1178112, pct: 44.4, color: '#0d9488' },
+      { label: 'Adult Gold',   val: 742266,  pct: 28.0, color: '#3b82f6' },
+      { label: 'VVIP Tables',  val: 500000,  pct: 18.8, color: '#c9a84c' },
+      { label: 'Child/Teen',   val: 180000,  pct: 6.8,  color: '#8b5cf6' },
+      { label: 'F&B/Other',    val: 54150,   pct: 2.0,  color: '#64748b' },
+    ],
+    costBreak: [
+      { label: 'Entertainment & AV', val: 1107000, color: '#c9a84c' },
+      { label: 'Food & Bev Cost',    val: 925000,  color: '#0d9488' },
+      { label: 'Tent & Venue',       val: 175000,  color: '#3b82f6' },
+      { label: 'Other Ops',          val: 77456,   color: '#8b5cf6' },
+    ],
+    costItems: [
+      { lbl: 'Entertainment & AV',    val: 1107000, pct: '48.5%' },
+      { lbl: 'Food & Beverage Cost',  val: 925000,  pct: '40.5%' },
+      { lbl: 'Tent / Main Structure', val: 175000,  pct: '7.7%'  },
+      { lbl: 'Other (Décor, Staff…)', val: 77456,   pct: '3.3%'  },
+    ],
+    paxMix: [
+      { lbl: 'Adult Silver', pax: 99,  pct: 50, color: '#0d9488' },
+      { lbl: 'Adult Gold',   pax: 50,  pct: 25, color: '#3b82f6' },
+      { lbl: 'Child/Teen',   pax: 50,  pct: 25, color: '#8b5cf6' },
+    ],
+    note: 'Estimated breakdown — 2023 detail not available',
+  },
+  2024: {
+    revenue: 2947472, cost: 2395785, gop: 551687, gopPct: 18.72, pax: 279,
+    revPerCover: 10565, costPerCover: 8587,
+    revBreak: [
+      { label: 'Adult Silver', val: 1325000, pct: 44.9, color: '#0d9488' },
+      { label: 'VVIP Tables',  val: 900000,  pct: 30.5, color: '#c9a84c' },
+      { label: 'Adult Gold',   val: 450000,  pct: 15.3, color: '#3b82f6' },
+      { label: 'Child/Teen',   val: 230000,  pct: 7.8,  color: '#8b5cf6' },
+      { label: 'F&B/Other',    val: 42472,   pct: 1.5,  color: '#64748b' },
+    ],
+    costBreak: [
+      { label: 'Entertainment & Operating', val: 1561055, color: '#c9a84c' },
+      { label: 'Food & Bev Cost',           val: 834730,  color: '#0d9488' },
+    ],
+    costItems: [
+      { lbl: 'Entertainment & Operating', val: 1561055, pct: '65.2%' },
+      { lbl: 'Food & Beverage Cost',      val: 834730,  pct: '34.8%' },
+    ],
+    paxMix: [
+      { lbl: 'Adult Silver (11,888++)',  pax: 112, pct: 40, color: '#0d9488' },
+      { lbl: 'VVIP (18,888++)',          pax: 56,  pct: 20, color: '#c9a84c' },
+      { lbl: 'Adult Gold (14,888++)',    pax: 56,  pct: 20, color: '#3b82f6' },
+      { lbl: 'Child/Teen (3,500++)',     pax: 55,  pct: 20, color: '#8b5cf6' },
+    ],
+    note: 'Cost split only: Entertainment vs F&B (2024 detail)',
+  },
+  2025: {
+    revenue: 3061938, cost: 2981133, gop: 80805, gopPct: 2.64, pax: 248,
+    revPerCover: 12346, costPerCover: 12021,
+    revBreak: [
+      { label: 'VVIP (72 pax)',          val: 1359936, pct: 44.4, color: '#c9a84c' },
+      { label: 'Adult Silver (92 pax)',  val: 1093696, pct: 35.7, color: '#0d9488' },
+      { label: 'Adult Gold (28 pax)',    val: 387144,  pct: 12.6, color: '#3b82f6' },
+      { label: 'Child/Teen (56 pax)',    val: 196000,  pct: 6.4,  color: '#8b5cf6' },
+      { label: 'F&B Additional',         val: 25162,   pct: 0.8,  color: '#64748b' },
+    ],
+    costBreak: [
+      { label: 'Entertainment & AV', val: 1654260, color: '#c9a84c' },
+      { label: 'Food & Bev Cost',    val: 769816,  color: '#0d9488' },
+      { label: 'Tent & Venue',       val: 348000,  color: '#3b82f6' },
+      { label: 'Band Travel (BKK)',  val: 89600,   color: '#f97316' },
+      { label: 'Décor & Props',      val: 57395,   color: '#8b5cf6' },
+      { label: 'Staff Uniforms',     val: 38318,   color: '#64748b' },
+      { label: 'Other Misc.',        val: 23744,   color: '#94a3b8' },
+    ],
+    costItems: [
+      { lbl: 'Entertainment (Sound, AV, Band, DJ, MC)', val: 1654260, pct: '55.5%' },
+      { lbl: 'Food & Beverage Cost',                    val: 769816,  pct: '25.8%' },
+      { lbl: 'Tent / Main Structure',                   val: 348000,  pct: '11.7%' },
+      { lbl: 'Band Travel & Accommodation (BKK)',       val: 89600,   pct: '3.0%'  },
+      { lbl: 'Decoration & Props',                      val: 57395,   pct: '1.9%'  },
+      { lbl: 'Staff Uniforms & Hostess',                val: 38318,   pct: '1.3%'  },
+      { lbl: 'Casuals, Wristbands, Other',              val: 23744,   pct: '0.8%'  },
+    ],
+    paxMix: [
+      { lbl: 'Adult Silver (11,888++)', pax: 92, pct: 37, color: '#0d9488' },
+      { lbl: 'Child/Teen (3,500++)',    pax: 56, pct: 23, color: '#8b5cf6' },
+      { lbl: 'VVIP (18,888++)',         pax: 72, pct: 29, color: '#c9a84c' },
+      { lbl: 'Adult Gold (14,888++)',   pax: 28, pct: 11, color: '#3b82f6' },
+    ],
+    note: 'Full 2025 breakdown',
+  },
+};
+
+const ALERTS = {
+  2023: { cls: 'alert-green', txt: '✓ Strong performance in 2023. GOP of <strong>13.9%</strong> (370K THB) on 199 guests. Revenue per cover was the highest across all 3 years at 13,340 THB.' },
+  2024: { cls: 'alert-gold',  txt: '★ Best year on record: GOP reached <strong>18.7%</strong> (552K THB) in 2024. Entertainment costs were contained at ~53% of operating spend. PAX at 279 — highest volume.' },
+  2025: { cls: 'alert-red',   txt: '⚠ GOP dropped to <strong>2.6%</strong> in 2025 (vs 18.7% in 2024). Entertainment costs surged +437K YoY — consuming 54% of total revenue. Structural fix needed for 2026.' },
+};
+
+const YOY_ROWS = [
+  { label:'Total Covers (PAX)', cat:'rev',  v:[199,279,248],   d:'−31',     dp:'−11.1%', dCls:'neg' },
+  { label:'Revenue (THB)',       cat:'rev',  v:[2654528,2947472,3061938], d:'+114,466', dp:'+3.9%',  dCls:'pos' },
+  { label:'— Entertainment & Operating', cat:'cost', v:['—',1561055,2211317], d:'+650,262', dp:'+41.7%', dCls:'neg' },
+  { label:'— Food & Bev Cost',   cat:'cost', v:['—',834730,769816], d:'−64,914', dp:'−7.8%', dCls:'pos' },
+  { label:'Total Cost',          cat:'cost', cls:'tr-total', v:[2284456,2395785,2981133], d:'+585,348', dp:'+24.4%', dCls:'neg' },
+  { label:'GOP (THB)',           cat:'gop',  cls:'tr-gop', v:[370072,551687,80805], d:'−470,882', dp:'−85.4%', dCls:'neg' },
+  { label:'GOP Margin (%)',      cat:'gop',  cls:'tr-gop', v:['13.9%','18.7%','2.6%'], d:'−16.1 pts', dp:'—', dCls:'neg' },
+  { label:'Rev / Cover (THB)',   cat:'rev',  v:[13340,10565,12346], d:'+1,781', dp:'+16.9%', dCls:'pos' },
+];
+
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let currentYear = 2025;
+let currentMode = 'compare';
+let activeTableRow = 'all';
+let activeCol = 3;
+let trendMode = 'all';
+
+// ══════════════════════════════════════════════════════════════
+// CHARTS
+// ══════════════════════════════════════════════════════════════
+let trendChart, revChart, costChart;
+
+function initCharts() {
+  Chart.defaults.color = '#94a3b8';
+  Chart.defaults.borderColor = '#1e293b';
+
+  // Trend
+  trendChart = new Chart(document.getElementById('trendChart'), {
+    type: 'bar',
+    data: getTrendData(),
+    options: getTrendOptions(),
+  });
+
+  // Revenue donut
+  revChart = new Chart(document.getElementById('revChart'), {
+    type: 'doughnut',
+    data: getRevData(currentYear),
+    options: {
+      responsive:true, maintainAspectRatio:true, cutout:'58%',
+      plugins:{
+        legend:{position:'bottom',labels:{boxWidth:10,font:{size:10},padding:8}},
+        tooltip:{callbacks:{label:ctx=>{
+          const total = D[currentYear].revenue;
+          return `${ctx.label}: ${ctx.raw.toLocaleString()} THB (${(ctx.raw/total*100).toFixed(1)}%)`;
+        }}}
+      }
+    }
+  });
+
+  // Cost donut
+  costChart = new Chart(document.getElementById('costChart'), {
+    type: 'doughnut',
+    data: getCostData(currentYear),
+    options: {
+      responsive:true, maintainAspectRatio:true, cutout:'58%',
+      plugins:{
+        legend:{position:'bottom',labels:{boxWidth:10,font:{size:10},padding:6}},
+        tooltip:{callbacks:{label:ctx=>{
+          const total = D[currentYear].cost;
+          return `${ctx.label}: ${ctx.raw.toLocaleString()} THB (${(ctx.raw/total*100).toFixed(1)}%)`;
+        }}}
+      }
+    }
+  });
+}
+
+function getTrendData() {
+  if (trendMode === 'gop') {
+    return {
+      labels: YEARS.map(String),
+      datasets: [{
+        label:'GOP (THB)', type:'bar',
+        data: YEARS.map(y=>D[y].gop),
+        backgroundColor: YEARS.map(y=>y===currentYear?'rgba(74,222,128,.85)':'rgba(74,222,128,.3)'),
+        borderRadius:6,
+      },{
+        label:'GOP %', type:'line',
+        data: YEARS.map(y=>D[y].gopPct),
+        borderColor:'#c9a84c', pointBackgroundColor:'#c9a84c',
+        pointRadius:5, tension:.3, yAxisID:'y1',
+        backgroundColor:'rgba(201,168,76,.1)',
+      }]
+    };
+  }
+  if (trendMode === 'cover') {
+    return {
+      labels: YEARS.map(String),
+      datasets: [{
+        label:'Rev/Cover (THB)',
+        data: YEARS.map(y=>D[y].revPerCover),
+        backgroundColor: YEARS.map(y=>y===currentYear?'rgba(201,168,76,.85)':'rgba(201,168,76,.3)'),
+        borderRadius:6,
+      },{
+        label:'Cost/Cover (THB)',
+        data: YEARS.map(y=>D[y].costPerCover),
+        backgroundColor: YEARS.map(y=>y===currentYear?'rgba(220,38,38,.75)':'rgba(220,38,38,.25)'),
+        borderRadius:6,
+      }]
+    };
+  }
+  return {
+    labels: YEARS.map(String),
+    datasets:[
+      { label:'Revenue', data:YEARS.map(y=>D[y].revenue),
+        backgroundColor:YEARS.map(y=>y===currentYear?'rgba(201,168,76,.85)':'rgba(201,168,76,.3)'),
+        borderRadius:5, order:1 },
+      { label:'Total Cost', data:YEARS.map(y=>D[y].cost),
+        backgroundColor:YEARS.map(y=>y===currentYear?'rgba(220,38,38,.75)':'rgba(220,38,38,.25)'),
+        borderRadius:5, order:1 },
+      { label:'GOP', data:YEARS.map(y=>D[y].gop), type:'line',
+        borderColor:'#4ade80', pointBackgroundColor: YEARS.map(y=>y===currentYear?'#4ade80':'#334155'),
+        pointRadius: YEARS.map(y=>y===currentYear?6:4),
+        backgroundColor:'rgba(74,222,128,.1)', tension:.3, order:0, yAxisID:'y1' }
+    ]
+  };
+}
+
+function getTrendOptions() {
+  return {
+    responsive:true, maintainAspectRatio:true,
+    scales:{
+      y:{ ticks:{callback:v=>v>=1e6?(v/1e6).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v}, grid:{color:'#1e293b'} },
+      y1:{ position:'right', ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}, grid:{drawOnChartArea:false} }
+    },
+    plugins:{
+      legend:{position:'bottom',labels:{boxWidth:12,font:{size:11},padding:12}},
+      tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${typeof ctx.raw==='number'?ctx.raw.toLocaleString():ctx.raw}`}}
+    }
+  };
+}
+
+function getRevData(yr) {
+  const rb = D[yr].revBreak;
+  return {
+    labels: rb.map(r=>r.label),
+    datasets:[{ data:rb.map(r=>r.val), backgroundColor:rb.map(r=>r.color), borderWidth:2, borderColor:'#1e293b', hoverOffset:8 }]
+  };
+}
+
+function getCostData(yr) {
+  const cb = D[yr].costBreak;
+  return {
+    labels: cb.map(r=>r.label),
+    datasets:[{ data:cb.map(r=>r.val), backgroundColor:cb.map(r=>r.color), borderWidth:2, borderColor:'#1e293b', hoverOffset:8 }]
+  };
+}
+
+// ══════════════════════════════════════════════════════════════
+// RENDER FUNCTIONS
+// ══════════════════════════════════════════════════════════════
+function fmt(n) { return typeof n==='number' ? n.toLocaleString('en-US') : n; }
+
+function renderKPIs(yr) {
+  const d = D[yr];
+  const prev = D[yr-1] || null;
+
+  const revDelta = prev ? (((d.revenue-prev.revenue)/prev.revenue)*100).toFixed(1) : null;
+  const paxDelta = prev ? d.pax - prev.pax : null;
+  const costDelta = prev ? (((d.cost-prev.cost)/prev.cost)*100).toFixed(1) : null;
+  const gopPtDelta = prev ? (d.gopPct - prev.gopPct).toFixed(1) : null;
+
+  document.getElementById('kpi-rev').textContent = d.revenue>=1e6 ? (d.revenue/1e6).toFixed(2)+'M' : fmt(d.revenue);
+  document.getElementById('kpi-rev-sub').textContent = fmt(d.revenue) + ' THB';
+  const revBadge = document.getElementById('kpi-rev-badge');
+  if (prev) {
+    revBadge.textContent = (revDelta>=0?'▲ +':'▼ ') + revDelta + '% vs '+(yr-1);
+    revBadge.className = 'badge ' + (revDelta>=0?'badge-up':'badge-down');
+  } else { revBadge.textContent = 'Earliest year'; revBadge.className='badge badge-neu'; }
+
+  document.getElementById('kpi-pax').textContent = d.pax;
+  document.getElementById('kpi-pax-sub').textContent = 'Covers sold';
+  const paxBadge = document.getElementById('kpi-pax-badge');
+  if (prev) {
+    paxBadge.textContent = (paxDelta>=0?'▲ +':'▼ ') + paxDelta + ' vs '+(yr-1)+' ('+prev.pax+')';
+    paxBadge.className = 'badge '+(paxDelta>=0?'badge-up':'badge-down');
+  } else { paxBadge.textContent = 'Earliest year'; paxBadge.className='badge badge-neu'; }
+
+  document.getElementById('kpi-cost').textContent = d.cost>=1e6 ? (d.cost/1e6).toFixed(2)+'M' : fmt(d.cost);
+  document.getElementById('kpi-cost-sub').textContent = fmt(d.cost) + ' THB';
+  const costBadge = document.getElementById('kpi-cost-badge');
+  if (prev) {
+    costBadge.textContent = (costDelta>=0?'▲ +':'▼ ') + costDelta + '% vs '+(yr-1);
+    costBadge.className = 'badge '+(costDelta>=0?'badge-down':'badge-up');
+  } else { costBadge.textContent = 'Earliest year'; costBadge.className='badge badge-neu'; }
+
+  document.getElementById('kpi-gop').textContent = fmt(d.gop);
+  document.getElementById('kpi-gop-sub').textContent = d.gopPct.toFixed(2) + '% margin';
+  const gopBadge = document.getElementById('kpi-gop-badge');
+  if (prev) {
+    gopBadge.textContent = (gopPtDelta>=0?'▲ +':'▼ ') + gopPtDelta + ' pts vs '+(yr-1);
+    gopBadge.className = 'badge '+(gopPtDelta>=0?'badge-up':'badge-down');
+  } else { gopBadge.textContent = 'Earliest year'; gopBadge.className='badge badge-neu'; }
+}
+
+function renderAlert(yr) {
+  const a = ALERTS[yr];
+  const el = document.getElementById('alertBanner');
+  el.className = 'alert ' + a.cls;
+  document.getElementById('alertText').innerHTML = a.txt;
+}
+
+function renderWaterfall(yr) {
+  const d = D[yr];
+  const maxVal = d.revenue;
+  const items = [
+    { lbl:'Revenue', val:d.revenue, color:'#c9a84c' },
+    ...d.costBreak.map(c=>({lbl:c.label, val:-c.val, color:c.color})),
+    { lbl:'GOP', val:d.gop, color:'#4ade80' },
+  ];
+  document.getElementById('wfTitle').textContent = `Cost Structure — ${yr}`;
+  const html = items.map(item=>{
+    const pct = Math.abs(item.val)/maxVal*100;
+    const isPos = item.val > 0;
+    return `<div class="wf-row">
+      <div class="wf-lbl">${item.lbl}</div>
+      <div class="wf-track">
+        <div class="wf-bar" style="width:${Math.min(pct,100)}%;background:${item.color}">
+          ${Math.abs(item.val)>=50000?fmt(Math.abs(item.val)):''}
+        </div>
+      </div>
+      <div class="wf-val">${pct.toFixed(1)}%</div>
+    </div>`;
+  }).join('');
+  document.getElementById('wfChart').innerHTML = html;
+}
+
+function renderPAX(yr) {
+  const d = D[yr];
+  document.getElementById('paxTitle').textContent = `PAX Mix — ${yr}`;
+  document.getElementById('paxNote').textContent = D[yr].note || '';
+  const html = d.paxMix.map(p=>`
+    <div class="pax-row">
+      <div class="lbl">${p.lbl}</div>
+      <div class="bar-wrap"><div class="bar" style="width:${p.pct}%;background:${p.color}">${p.pct}%</div></div>
+      <div class="cnt">${p.pax} pax</div>
+    </div>`).join('');
+  document.getElementById('paxMix').innerHTML = html;
+
+  // Cover cards
+  const covers = [
+    { yr, val: d.revPerCover, sub: 'Rev/Cover', color: '#c9a84c' },
+    { yr, val: d.costPerCover, sub: 'Cost/Cover', color: '#dc2626' },
+    { yr, val: d.revPerCover - d.costPerCover, sub: 'GOP/Cover', color: d.gopPct > 10 ? '#4ade80' : '#f87171' },
+  ];
+  document.getElementById('coverCards').innerHTML = covers.map(c=>`
+    <div style="background:#0f172a;border-radius:8px;padding:10px;text-align:center">
+      <div style="font-size:10px;color:#64748b;margin-bottom:3px">${c.sub}</div>
+      <div style="font-size:18px;font-weight:800;color:${c.color}">${fmt(c.val)}</div>
+      <div style="font-size:10px;color:#475569">THB</div>
+    </div>`).join('');
+}
+
+function renderCostDetail(yr) {
+  const d = D[yr];
+  const total = d.cost;
+  document.getElementById('costDetailTitle').textContent = `Operating Cost Detail — ${yr}`;
+  const html = d.costItems.map(item=>{
+    const barPct = (item.val/total*100).toFixed(0);
+    return `<div class="cost-row">
+      <div>
+        <div class="cost-lbl">${item.lbl}</div>
+        <div class="cost-pct">${item.pct} of total cost</div>
+        <div class="cost-bar-mini" style="width:${barPct}%"></div>
+      </div>
+      <div class="cost-val">${fmt(item.val)}</div>
+    </div>`;
+  }).join('');
+  const totalHtml = `<div class="cost-row" style="border-top:2px solid #c9a84c;margin-top:4px;padding-top:8px">
+    <div class="cost-lbl" style="color:#c9a84c;font-weight:700">Total Cost</div>
+    <div class="cost-val" style="color:#c9a84c">${fmt(total)}</div>
+  </div>`;
+  document.getElementById('costDetail').innerHTML = html + totalHtml;
+}
+
+function renderYoYTable(yr) {
+  const colIdx = YEARS.indexOf(yr) + 1;
+  const body = document.getElementById('yoyBody');
+  const rows = YOY_ROWS.filter(r => activeTableRow==='all' || r.cat===activeTableRow);
+  body.innerHTML = rows.map(r=>{
+    const cls = r.cls || '';
+    const cells = r.v.map((val,i)=>{
+      const isActive = (i+1)===colIdx;
+      const isGop = r.cls && r.cls.includes('gop');
+      const cellCls = isActive ? (isGop?'gop-col':'active-col') : '';
+      return `<td class="${cellCls}">${fmt(val)}</td>`;
+    }).join('');
+    return `<tr class="${cls}">
+      <td>${r.label}</td>
+      ${cells}
+      <td class="${r.dCls}">${r.d}</td>
+      <td class="${r.dCls}">${r.dp}</td>
+    </tr>`;
+  }).join('');
+  // header highlight
+  ['th-2023','th-2024','th-2025'].forEach((id,i)=>{
+    document.getElementById(id).className = (i+1)===colIdx ? 'active-col' : '';
+  });
+  activeCol = colIdx;
+}
+
+function renderCompareBadge(yr) {
+  const prev = yr > 2023 ? yr-1 : null;
+  document.getElementById('compareBadge').textContent = prev
+    ? `Showing: ${yr} vs ${prev}`
+    : `Showing: ${yr} (earliest year)`;
+}
+
+function renderRevChart(yr) {
+  document.getElementById('revChartTitle').textContent = `Revenue by Category`;
+  document.getElementById('revChartNote').textContent = D[yr].note || `${yr} data`;
+  revChart.data = getRevData(yr);
+  revChart.options.plugins.tooltip.callbacks.label = ctx=>{
+    const total = D[yr].revenue;
+    return `${ctx.label}: ${ctx.raw.toLocaleString()} THB (${(ctx.raw/total*100).toFixed(1)}%)`;
+  };
+  revChart.update('active');
+}
+
+function renderCostChart(yr) {
+  costChart.data = getCostData(yr);
+  costChart.options.plugins.tooltip.callbacks.label = ctx=>{
+    const total = D[yr].cost;
+    return `${ctx.label}: ${ctx.raw.toLocaleString()} THB (${(ctx.raw/total*100).toFixed(1)}%)`;
+  };
+  costChart.update('active');
+}
+
+// ══════════════════════════════════════════════════════════════
+// STATE SETTERS
+// ══════════════════════════════════════════════════════════════
+function setYear(yr) {
+  currentYear = yr;
+  document.querySelectorAll('.ytab').forEach(t => t.classList.toggle('active', +t.dataset.year===yr));
+  renderAll();
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('btn-compare').classList.toggle('active', mode==='compare');
+  document.getElementById('btn-single').classList.toggle('active', mode==='single');
+  renderAll();
+}
+
+function renderAll() {
+  const yr = currentYear;
+  renderKPIs(yr);
+  renderAlert(yr);
+  renderWaterfall(yr);
+  renderPAX(yr);
+  renderCostDetail(yr);
+  renderYoYTable(yr);
+  renderRevChart(yr);
+  renderCostChart(yr);
+  renderCompareBadge(yr);
+
+  // Update trend chart to highlight selected year
+  trendChart.data = getTrendData();
+  trendChart.update('active');
+}
+
+function setTrendMode(mode) {
+  trendMode = mode;
+  document.querySelectorAll('#trendTabs .inner-tab').forEach((t,i)=>{
+    t.classList.toggle('active', ['all','gop','cover'][i]===mode);
+  });
+  trendChart.data = getTrendData();
+  if (mode==='gop') {
+    trendChart.options.scales.y1.ticks.callback = v=>v.toFixed(1)+'%';
+  } else {
+    trendChart.options.scales.y1.ticks.callback = v=>v>=1000?(v/1000).toFixed(0)+'K':v;
+  }
+  trendChart.update('active');
+}
+
+function highlightCol(col) {
+  activeCol = col;
+  const yr = YEARS[col-1];
+  setYear(yr);
+}
+
+function toggleRow(cat) {
+  activeTableRow = cat;
+  document.querySelectorAll('.fpill').forEach((p,i)=>{
+    p.classList.toggle('active', ['all','rev','cost','gop'][i]===cat);
+  });
+  renderYoYTable(currentYear);
+}
+
+// ══════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════
+initCharts();
+renderAll();
+</script>
+</body>
+</html>
